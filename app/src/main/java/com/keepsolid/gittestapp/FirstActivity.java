@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +28,7 @@ public class FirstActivity extends AppCompatActivity {
 
     private void initViews() {
         enterTextField = findViewById(R.id.enter_text_field);
+        enterTextField.setMovementMethod(new ScrollingMovementMethod());
         sendBtn = findViewById(R.id.send_btn);
 
     }

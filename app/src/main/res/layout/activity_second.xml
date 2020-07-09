@@ -4,31 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SecondActivity">
+    tools:context=".SecondActivity"
+    android:background="@color/colorPrimaryLight"
+    >
     
     <TextView
         android:id="@+id/show_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_margin="@dimen/activity_view_margin"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/ok_btn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:gravity="center"
+        android:background="@color/colorSecondaryLight"
         android:text="@string/second_activity_text"
         android:textSize="@dimen/messageTextSize"
-        android:scrollbars = "vertical"/>
+        android:textColor="@color/colorPrimaryDark"
+        android:scrollbars = "vertical" />
+
 
     <Button
         android:id="@+id/ok_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_view_margin"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/cancel_btn"
         android:text="@string/ok"
+        android:background="@color/colorSecondary"
+        android:textColor="@color/colorPrimaryDark"
         />
 
     <Button
@@ -36,11 +43,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_view_margin"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/ok_btn"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/cancel"
+        android:background="@color/colorSecondary"
+        android:textColor="@color/colorPrimaryDark"
         />
 
 
