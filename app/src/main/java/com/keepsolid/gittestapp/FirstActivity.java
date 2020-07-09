@@ -1,8 +1,9 @@
 package com.keepsolid.gittestapp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -35,21 +36,32 @@ public class FirstActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String enteredText = enterTextField.getText().toString();
-                if(enteredText.trim().isEmpty()){
-                    Toast.makeText(FirstActivity.this, "Empty field", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    openSecondActivityWithData(enteredText);
+                if (enteredText.trim().isEmpty()) {
+                    showToast("Empty field");
+                } else {
+                    openSecondActivityForResult(enteredText);
                 }
             }
         });
     }
 
-    public void openSecondActivityWithData(String text){
+    private void showToast(String text) {
+        Toast.makeText(FirstActivity.this, text, Toast.LENGTH_LONG).show();
+    }
+
+    public void openSecondActivityForResult(String text) {
         Intent dataIntent = new Intent(FirstActivity.this, SecondActivity.class);
         dataIntent.putExtra(Constants.EXTRA_TEXT, text);
         startActivityForResult(dataIntent, Constants.TEXT_REQUEST_CODE);
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            showToast("Success!");
+        } else {
+            enterTextField.setText(null);
+        }
+    }
 }
