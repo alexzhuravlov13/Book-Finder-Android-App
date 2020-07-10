@@ -5,35 +5,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FirstActivity"
-    android:background="@color/colorPrimaryLight">
+    android:background="@color/colorPrimary_dark">
 
-    <EditText
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_layout" />
+
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/enter_text_field"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="@dimen/activity_view_margin"
+        android:layout_margin="@dimen/default_margin"
+        android:padding="@dimen/default_middle_margin"
         android:gravity="bottom"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/send_btn"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toTopOf="@+id/send_button"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:background="@color/colorSecondaryLight"
+        android:background="@color/colorPrimary_light"
         android:hint="@string/enter_text_field"
-        android:textColorHint="@color/colorPrimaryDark"
-        android:scrollbars="vertical"
-        />
+        android:textColorHint="@color/colorPrimary_dark"
+        android:scrollbars="vertical" />
 
-    <Button
-        android:id="@+id/send_btn"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/send_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_view_margin"
+        android:layout_margin="@dimen/default_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@color/colorSecondary"
+        android:background="@color/colorAccent"
         android:text="@string/send_btn_title"
-        android:textColor="@color/colorPrimaryDark"
-        />
+        android:textColor="@color/colorPrimary_light" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

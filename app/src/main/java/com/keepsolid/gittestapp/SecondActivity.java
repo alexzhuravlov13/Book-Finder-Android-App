@@ -1,20 +1,20 @@
 package com.keepsolid.gittestapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatTextView;
+
+import com.keepsolid.gittestapp.base.BaseActivity;
 import com.keepsolid.gittestapp.utils.Constants;
 
-public class SecondActivity extends AppCompatActivity {
-    private TextView textView;
-    private Button okButton;
-    private Button cancelButton;
+public class SecondActivity extends BaseActivity {
+    private AppCompatTextView textView;
+    private AppCompatButton okButton;
+    private AppCompatButton cancelButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +23,7 @@ public class SecondActivity extends AppCompatActivity {
         initViews();
         setListeners();
         textViewSetText();
+        initToolbar(this.getClass().getSimpleName());
     }
 
     private void setListeners() {
@@ -61,8 +62,8 @@ public class SecondActivity extends AppCompatActivity {
     private void initViews() {
         textView = findViewById(R.id.show_text);
         textView.setMovementMethod(new ScrollingMovementMethod());
-        okButton = findViewById(R.id.ok_btn);
-        cancelButton = findViewById(R.id.cancel_btn);
+        okButton = findViewById(R.id.ok_button);
+        cancelButton = findViewById(R.id.cancel_button);
     }
 
 

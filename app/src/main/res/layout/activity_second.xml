@@ -1,55 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SecondActivity"
-    android:background="@color/colorPrimaryLight"
-    >
-    
-    <TextView
+    android:background="@color/colorPrimary_dark"
+    tools:context=".SecondActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_layout" />
+
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/show_text"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="@dimen/activity_view_margin"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/ok_btn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:padding="@dimen/default_middle_margin"
+        android:background="@color/colorPrimary_light"
         android:gravity="center"
-        android:background="@color/colorSecondaryLight"
-        android:text="@string/second_activity_text"
-        android:textSize="@dimen/messageTextSize"
-        android:textColor="@color/colorPrimaryDark"
-        android:scrollbars = "vertical" />
+        android:scrollbars="vertical"
+        android:layout_above="@+id/buttons"
+        android:layout_below="@+id/toolbar"
+        tools:text="@string/second_activity_text"
+        android:textColor="@color/colorPrimary_text"
+        android:textSize="@dimen/messageTextSize" />
 
-
-    <Button
-        android:id="@+id/ok_btn"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/buttons"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_view_margin"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/cancel_btn"
-        android:text="@string/ok"
-        android:background="@color/colorSecondary"
-        android:textColor="@color/colorPrimaryDark"
-        />
+        android:layout_alignParentBottom="true"
+        android:gravity="center">
 
-    <Button
-        android:id="@+id/cancel_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_view_margin"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/ok_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/cancel"
-        android:background="@color/colorSecondary"
-        android:textColor="@color/colorPrimaryDark"
-        />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/ok_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/show_text"
+            android:layout_margin="@dimen/default_margin"
+            android:background="@color/colorAccent"
+            android:text="@string/ok"
+            android:textColor="@color/colorPrimary_light" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/show_text"
+            android:layout_margin="@dimen/default_margin"
+            android:layout_toRightOf="@+id/ok_button"
+            android:background="@color/colorAccent"
+            android:text="@string/cancel"
+            android:textColor="@color/colorPrimary_light" />
+    </LinearLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
