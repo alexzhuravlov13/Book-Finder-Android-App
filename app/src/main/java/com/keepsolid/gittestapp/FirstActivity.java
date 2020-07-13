@@ -3,20 +3,19 @@ package com.keepsolid.gittestapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatEditText;
 
 import com.keepsolid.gittestapp.base.BaseActivity;
 import com.keepsolid.gittestapp.utils.Constants;
 
 public class FirstActivity extends BaseActivity {
-    private AppCompatEditText enterTextField;
-    private AppCompatButton sendBtn;
+    private EditText enterTextField;
+    private Button sendBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +28,7 @@ public class FirstActivity extends BaseActivity {
 
     private void initViews() {
         enterTextField = findViewById(R.id.enter_text_field);
-        enterTextField.setMovementMethod(new ScrollingMovementMethod());
+        enterTextField.setVerticalScrollBarEnabled(true);
         sendBtn = findViewById(R.id.send_button);
 
     }

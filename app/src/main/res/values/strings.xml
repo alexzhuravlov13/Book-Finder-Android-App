@@ -6,8 +6,9 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="first_activity">Show First Activity</string>
-    <string name="second_activity">Show Empty vbSecond Activity</string>
+    <string name="second_activity">Show Empty Second Activity</string>
     <string name="about">About</string>
     <string name="select_activity">Select Activity</string>
     <string name="about_text">This app made by Alexey Zhuravlov.</string>
+    <string name="received_text">Received Text</string>
 </resources>

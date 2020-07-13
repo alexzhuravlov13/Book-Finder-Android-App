@@ -4,17 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
-
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatTextView;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.keepsolid.gittestapp.base.BaseActivity;
 import com.keepsolid.gittestapp.utils.Constants;
 
 public class SecondActivity extends BaseActivity {
-    private AppCompatTextView textView;
-    private AppCompatButton okButton;
-    private AppCompatButton cancelButton;
+    private TextView textView;
+    private Button okButton;
+    private Button cancelButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

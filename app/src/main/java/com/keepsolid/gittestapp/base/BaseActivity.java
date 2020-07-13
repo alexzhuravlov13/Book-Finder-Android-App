@@ -2,18 +2,18 @@ package com.keepsolid.gittestapp.base;
 
 import android.content.Intent;
 import android.view.MenuItem;
-import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.keepsolid.gittestapp.FirstActivity;
 import com.keepsolid.gittestapp.R;
 import com.keepsolid.gittestapp.SecondActivity;
 import com.keepsolid.gittestapp.utils.Constants;
 
 public abstract class BaseActivity extends AppCompatActivity {
-    private Toolbar toolbar;
+    private MaterialToolbar toolbar;
 
     public void initToolbar(String title) {
         toolbar = findViewById(R.id.toolbar);
@@ -33,7 +33,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private void initMenu() {
         toolbar.inflateMenu(R.menu.main_menu);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+        toolbar.setOnMenuItemClickListener(new MaterialToolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
