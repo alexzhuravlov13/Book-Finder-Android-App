@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.appbar.MaterialToolbar;
-import com.keepsolid.gittestapp.FirstActivity;
 import com.keepsolid.gittestapp.R;
 import com.keepsolid.gittestapp.SecondActivity;
 import com.keepsolid.gittestapp.utils.Constants;
@@ -21,8 +20,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         setTitle(title);
 
         initMenu();
-
-
     }
 
     private void setTitle(String title) {
@@ -37,23 +34,31 @@ public abstract class BaseActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
-                    case R.id.first_activity_select: {
-                        Intent intent = new Intent(BaseActivity.this, FirstActivity.class);
-                        startActivity(intent);
+                    case R.id.htc_select: {
+                        Intent viewIntent = new Intent(BaseActivity.this, SecondActivity.class);
+                        viewIntent.putExtra(Constants.KEY_RES_ID, 0);
+                        startActivity(viewIntent);
                         return true;
                     }
 
-                    case R.id.second_activity_select: {
-                        Intent intent = new Intent(BaseActivity.this, SecondActivity.class);
-                        startActivityForResult(intent, Constants.TEXT_REQUEST_CODE);
+                    case R.id.moto_select: {
+                        Intent viewIntent = new Intent(BaseActivity.this, SecondActivity.class);
+                        viewIntent.putExtra(Constants.KEY_RES_ID, 1);
+                        startActivity(viewIntent);
                         return true;
                     }
 
-                    case R.id.about: {
-                        String text = getString(R.string.about_text);
-                        Intent intent = new Intent(BaseActivity.this, SecondActivity.class);
-                        intent.putExtra(Constants.EXTRA_TEXT, text);
-                        startActivity(intent);
+                    case R.id.pixel_select: {
+                        Intent viewIntent = new Intent(BaseActivity.this, SecondActivity.class);
+                        viewIntent.putExtra(Constants.KEY_RES_ID, 2);
+                        startActivity(viewIntent);
+                        return true;
+                    }
+
+                    case R.id.galaxy_select: {
+                        Intent viewIntent = new Intent(BaseActivity.this, SecondActivity.class);
+                        viewIntent.putExtra(Constants.KEY_RES_ID, 3);
+                        startActivity(viewIntent);
                         return true;
                     }
                     default:

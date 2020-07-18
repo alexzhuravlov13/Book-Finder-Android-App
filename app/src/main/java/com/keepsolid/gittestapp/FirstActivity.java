@@ -1,69 +1,69 @@
 package com.keepsolid.gittestapp;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
-
-import androidx.annotation.Nullable;
 
 import com.keepsolid.gittestapp.base.BaseActivity;
+import com.keepsolid.gittestapp.fragment.ChooserFragment;
+import com.keepsolid.gittestapp.fragment.ViewerFragment;
 import com.keepsolid.gittestapp.utils.Constants;
+import com.keepsolid.gittestapp.utils.listeners.SmartphoneSelectListener;
 
 public class FirstActivity extends BaseActivity {
-    private EditText enterTextField;
-    private Button sendBtn;
+    private ChooserFragment chooserFragment;
+    private ViewerFragment viewerFragment;
+    private SmartphoneSelectListener smartphoneSelectListener;
+    private boolean inLandscapeMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
-        initViews();
-        setListeners();
-        initToolbar(this.getClass().getSimpleName());
-    }
 
-    private void initViews() {
-        enterTextField = findViewById(R.id.enter_text_field);
-        enterTextField.setVerticalScrollBarEnabled(true);
-        sendBtn = findViewById(R.id.send_button);
+        initToolbar(getString(R.string.app_name));
 
-    }
+        inLandscapeMode = findViewById(R.id.fragment_viewer) != null;
 
-    private void setListeners() {
-        sendBtn.setOnClickListener(new View.OnClickListener() {
+
+        chooserFragment = (ChooserFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_chooser);
+
+        if (inLandscapeMode) {
+            viewerFragment = (ViewerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_viewer);
+        }
+
+        smartphoneSelectListener = new SmartphoneSelectListener() {
             @Override
-            public void onClick(View view) {
-                String enteredText = enterTextField.getText().toString();
-                if (enteredText.trim().isEmpty()) {
-                    showToast("Empty field");
-                } else {
-                    openSecondActivityForResult(enteredText);
-                }
+            public void onHtcSelected() {
+                displaySelected(0);
             }
-        });
+
+            @Override
+            public void onMotoSelected() {
+                displaySelected(1);
+            }
+
+            @Override
+            public void onPixelSelected() {
+                displaySelected(2);
+            }
+
+            @Override
+            public void onGalaxySelected() {
+                displaySelected(3);
+            }
+        };
+
+        chooserFragment.setSmartphoneSelectListener(smartphoneSelectListener);
+
     }
 
-    private void showToast(String text) {
-        Toast.makeText(FirstActivity.this, text, Toast.LENGTH_LONG).show();
-    }
-
-    public void openSecondActivityForResult(String text) {
-        Intent dataIntent = new Intent(FirstActivity.this, SecondActivity.class);
-        dataIntent.putExtra(Constants.EXTRA_TEXT, text);
-        startActivityForResult(dataIntent, Constants.TEXT_REQUEST_CODE);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            showToast("Success!");
+    private void displaySelected(int selectedImageResId) {
+        if (inLandscapeMode) {
+            viewerFragment.displayResource(selectedImageResId);
         } else {
-            enterTextField.setText(null);
+            Intent viewIntent = new Intent(FirstActivity.this, SecondActivity.class);
+            viewIntent.putExtra(Constants.KEY_RES_ID, selectedImageResId);
+            startActivity(viewIntent);
         }
     }
 }

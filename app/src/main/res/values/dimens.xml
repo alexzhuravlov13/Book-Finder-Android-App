@@ -4,4 +4,5 @@
     <dimen name="default_middle_margin">8dp</dimen>
     <dimen name="messageTextSize">15sp</dimen>
     <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="stroke_width">2dp</dimen>
 </resources>

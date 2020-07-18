@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/select_activity"
-        android:title="@string/select_activity">
-        <menu>
-            <item
-                android:id="@+id/first_activity_select"
-                android:title="@string/first_activity" />
-
-            <item
-                android:id="@+id/second_activity_select"
-                android:title="@string/second_activity" />
-        </menu>
-    </item>
 
     <item
-        android:id="@+id/about"
-        android:title="@string/about" />
+        android:id="@+id/htc_select"
+        android:title="@string/htc" />
+
+    <item
+        android:id="@+id/moto_select"
+        android:title="@string/moto" />
+    <item
+        android:id="@+id/pixel_select"
+        android:title="@string/pixel" />
+    <item
+        android:id="@+id/galaxy_select"
+        android:title="@string/galaxy" />
 
 </menu>

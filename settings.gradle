@@ -1,2 +1,2 @@
-rootProject.name='Git Test App'
+rootProject.name = 'Git Test App'
 include ':app'

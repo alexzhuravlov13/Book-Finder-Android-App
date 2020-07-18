@@ -1,69 +1,26 @@
 package com.keepsolid.gittestapp;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.keepsolid.gittestapp.base.BaseActivity;
+import com.keepsolid.gittestapp.fragment.ViewerFragment;
 import com.keepsolid.gittestapp.utils.Constants;
 
 public class SecondActivity extends BaseActivity {
-    private TextView textView;
-    private Button okButton;
-    private Button cancelButton;
+    private ViewerFragment viewerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
-        initViews();
-        setListeners();
-        textViewSetText();
-        initToolbar(this.getClass().getSimpleName());
+
+        initToolbar(getString(R.string.app_name));
+
+        int smartPhoneId = getIntent().getIntExtra(Constants.KEY_RES_ID, -1);
+
+        viewerFragment = (ViewerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_viewer);
+
+        viewerFragment.displayResource(smartPhoneId);
+
     }
-
-    private void setListeners() {
-        okButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                handleOkButton();
-            }
-        });
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                handleCancelButton();
-            }
-        });
-    }
-
-    private void handleCancelButton() {
-        Intent intent = new Intent();
-        setResult(RESULT_CANCELED, intent);
-        finish();
-    }
-
-    private void handleOkButton() {
-        Intent intent = new Intent();
-        setResult(RESULT_OK, intent);
-        finish();
-    }
-
-    private void textViewSetText() {
-        Intent intent = getIntent();
-        String messageText = intent.getStringExtra(Constants.EXTRA_TEXT);
-        textView.setText(messageText);
-    }
-
-    private void initViews() {
-        textView = findViewById(R.id.show_text);
-        textView.setMovementMethod(new ScrollingMovementMethod());
-        okButton = findViewById(R.id.ok_button);
-        cancelButton = findViewById(R.id.cancel_button);
-    }
-
-
 }
