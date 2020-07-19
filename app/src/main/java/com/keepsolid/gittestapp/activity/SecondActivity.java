@@ -1,7 +1,8 @@
-package com.keepsolid.gittestapp;
+package com.keepsolid.gittestapp.activity;
 
 import android.os.Bundle;
 
+import com.keepsolid.gittestapp.R;
 import com.keepsolid.gittestapp.base.BaseActivity;
 import com.keepsolid.gittestapp.fragment.ViewerFragment;
 import com.keepsolid.gittestapp.utils.Constants;

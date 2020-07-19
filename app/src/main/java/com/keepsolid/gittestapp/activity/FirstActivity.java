@@ -1,8 +1,9 @@
-package com.keepsolid.gittestapp;
+package com.keepsolid.gittestapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.keepsolid.gittestapp.R;
 import com.keepsolid.gittestapp.base.BaseActivity;
 import com.keepsolid.gittestapp.fragment.ChooserFragment;
 import com.keepsolid.gittestapp.fragment.ViewerFragment;

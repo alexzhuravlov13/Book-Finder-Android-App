@@ -7,4 +7,6 @@
     <string name="galaxy">Samsung Galaxy S10</string>
     <string name="moto">Motorola Moto X</string>
     <string name="htc">HTC Dream</string>
+    <string name="smartphone_chooser">Smartphone Button chooser</string>
+    <string name="smartphone_tab_chooser">Smartphone Tab Chooser</string>
 </resources>

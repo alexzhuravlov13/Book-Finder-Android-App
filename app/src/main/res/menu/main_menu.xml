@@ -2,17 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/htc_select"
-        android:title="@string/htc" />
+        android:id="@+id/smartphone_btn_chooser"
+        android:title="@string/smartphone_chooser" />
 
     <item
-        android:id="@+id/moto_select"
-        android:title="@string/moto" />
-    <item
-        android:id="@+id/pixel_select"
-        android:title="@string/pixel" />
-    <item
-        android:id="@+id/galaxy_select"
-        android:title="@string/galaxy" />
+        android:id="@+id/smartphone_tab_chooser"
+        android:title="@string/smartphone_tab_chooser" />
 
 </menu>
