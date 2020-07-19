@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import java.util.Objects;
 
-public class Smartphone implements Parcelable {
+public class Smartphone {
     private String manufacturer;
     private String model;
     private int year;
@@ -74,35 +74,4 @@ public class Smartphone implements Parcelable {
         this.image = image;
     }
 
-    protected Smartphone(Parcel in) {
-        manufacturer = in.readString();
-        model = in.readString();
-        year = in.readInt();
-        image = in.readInt();
-    }
-
-    public static final Creator<Smartphone> CREATOR = new Creator<Smartphone>() {
-        @Override
-        public Smartphone createFromParcel(Parcel in) {
-            return new Smartphone(in);
-        }
-
-        @Override
-        public Smartphone[] newArray(int size) {
-            return new Smartphone[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(manufacturer);
-        parcel.writeString(model);
-        parcel.writeInt(year);
-        parcel.writeInt(image);
-    }
 }
