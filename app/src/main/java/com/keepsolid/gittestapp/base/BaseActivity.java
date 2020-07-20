@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.keepsolid.gittestapp.R;
 import com.keepsolid.gittestapp.activity.FirstActivity;
+import com.keepsolid.gittestapp.activity.FourthActivity;
 import com.keepsolid.gittestapp.activity.ThirdActivity;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -47,6 +48,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 
                     case R.id.smartphone_tab_chooser: {
                         Intent viewIntent = new Intent(BaseActivity.this, ThirdActivity.class);
+                        startActivity(viewIntent);
+                        return true;
+                    }
+
+                    case R.id.smartphone_btn_chooser_manager: {
+                        Intent viewIntent = new Intent(BaseActivity.this, FourthActivity.class);
                         startActivity(viewIntent);
                         return true;
                     }

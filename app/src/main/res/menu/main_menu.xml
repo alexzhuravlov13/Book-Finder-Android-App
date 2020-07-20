@@ -9,4 +9,8 @@
         android:id="@+id/smartphone_tab_chooser"
         android:title="@string/smartphone_tab_chooser" />
 
+    <item
+        android:id="@+id/smartphone_btn_chooser_manager"
+        android:title="@string/smartphone_chooser_manager" />
+
 </menu>

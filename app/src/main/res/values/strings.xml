@@ -9,4 +9,5 @@
     <string name="htc">HTC Dream</string>
     <string name="smartphone_chooser">Smartphone Button chooser</string>
     <string name="smartphone_tab_chooser">Smartphone Tab Chooser</string>
+    <string name="smartphone_chooser_manager">Smartphone Chooser With Manager</string>
 </resources>
