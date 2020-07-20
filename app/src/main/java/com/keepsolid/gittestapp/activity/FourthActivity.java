@@ -25,6 +25,7 @@ public class FourthActivity extends BaseActivity {
 
         initToolbar(getString(R.string.app_name));
 
+
         chooserFragment = (ChooserFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_chooser);
 
         container = findViewById(R.id.container);
