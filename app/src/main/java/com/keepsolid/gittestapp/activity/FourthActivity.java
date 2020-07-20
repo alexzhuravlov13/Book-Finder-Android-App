@@ -21,7 +21,7 @@ public class FourthActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_first);
+        setContentView(R.layout.activity_fourth);
 
         initToolbar(getString(R.string.app_name));
 
@@ -61,7 +61,7 @@ public class FourthActivity extends BaseActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager
                 .beginTransaction();
-        fragmentTransaction.add(R.id.container, viewerFragment);
+        fragmentTransaction.replace(R.id.container, viewerFragment);
         fragmentTransaction.commit();
     }
 }
