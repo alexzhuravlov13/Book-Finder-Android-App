@@ -1,25 +1,31 @@
 package com.keepsolid.gittestapp.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.button.MaterialButton;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.keepsolid.gittestapp.R;
-import com.keepsolid.gittestapp.utils.listeners.SmartphoneSelectListener;
+import com.keepsolid.gittestapp.adapter.SmartphoneRecyclerAdapter;
+import com.keepsolid.gittestapp.model.Smartphone;
+import com.keepsolid.gittestapp.utils.repository.SmartphoneRepository;
+
+import java.util.List;
+
 
 public class ChooserFragment extends Fragment {
-    private MaterialButton htcButton;
-    private MaterialButton pixelButton;
-    private MaterialButton galaxyButton;
-    private MaterialButton motoButton;
 
-    private SmartphoneSelectListener smartphoneSelectListener;
+    private RecyclerView recyclerView;
+    private SmartphoneRecyclerAdapter adapter;
+    private List<Smartphone> smartphones;
 
     public ChooserFragment() {
     }
@@ -27,58 +33,25 @@ public class ChooserFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        smartphones = new SmartphoneRepository().getSmartphones();
     }
 
-    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chooser, container, false);
 
-        htcButton = view.findViewById(R.id.btn_htc);
-        pixelButton = view.findViewById(R.id.btn_pixel);
-        galaxyButton = view.findViewById(R.id.btn_galaxy);
-        motoButton = view.findViewById(R.id.btn_moto);
+        recyclerView = (RecyclerView) view.findViewById(R.id.rv_recycler);
 
-        htcButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (smartphoneSelectListener != null) {
-                    smartphoneSelectListener.onHtcSelected();
-                }
-            }
-        });
+        Context context = this.getContext();
 
-        pixelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (smartphoneSelectListener != null) {
-                    smartphoneSelectListener.onPixelSelected();
-                }
-            }
-        });
+        adapter = new SmartphoneRecyclerAdapter(smartphones);
 
-        galaxyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (smartphoneSelectListener != null) {
-                    smartphoneSelectListener.onGalaxySelected();
-                }
-            }
-        });
-
-        motoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (smartphoneSelectListener != null) {
-                    smartphoneSelectListener.onMotoSelected();
-                }
-            }
-        });
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(adapter);
 
         return view;
     }
 
-    public void setSmartphoneSelectListener(SmartphoneSelectListener smartphoneSelectListener) {
-        this.smartphoneSelectListener = smartphoneSelectListener;
-    }
+
+
 }

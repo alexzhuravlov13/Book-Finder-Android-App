@@ -2,19 +2,28 @@ package com.keepsolid.gittestapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.keepsolid.gittestapp.R;
+import com.keepsolid.gittestapp.adapter.SmartphoneRecyclerAdapter;
 import com.keepsolid.gittestapp.base.BaseActivity;
 import com.keepsolid.gittestapp.fragment.ChooserFragment;
 import com.keepsolid.gittestapp.fragment.ViewerFragment;
+import com.keepsolid.gittestapp.model.Smartphone;
 import com.keepsolid.gittestapp.utils.Constants;
-import com.keepsolid.gittestapp.utils.listeners.SmartphoneSelectListener;
+import com.keepsolid.gittestapp.utils.listeners.OnSmartphoneRecyclerItemClickListener;
+import com.keepsolid.gittestapp.utils.repository.SmartphoneRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FirstActivity extends BaseActivity {
-    private ChooserFragment chooserFragment;
-    private ViewerFragment viewerFragment;
-    private SmartphoneSelectListener smartphoneSelectListener;
-    private boolean inLandscapeMode;
+    private RecyclerView recyclerView;
+    private List<Smartphone> smartphones;
+    private SmartphoneRecyclerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,48 +32,25 @@ public class FirstActivity extends BaseActivity {
 
         initToolbar(getString(R.string.app_name));
 
-        inLandscapeMode = findViewById(R.id.fragment_viewer) != null;
+        recyclerView = (RecyclerView) findViewById(R.id.rv_recycler);
 
+        smartphones = new SmartphoneRepository().getSmartphones();
 
-        chooserFragment = (ChooserFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_chooser);
+        adapter = new SmartphoneRecyclerAdapter(smartphones);
 
-        if (inLandscapeMode) {
-            viewerFragment = (ViewerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_viewer);
-        }
-
-        smartphoneSelectListener = new SmartphoneSelectListener() {
+        adapter.setListener(new OnSmartphoneRecyclerItemClickListener() {
             @Override
-            public void onHtcSelected() {
-                displaySelected(0);
+            public void onItemClick(View v, int position) {
+                Intent intent = new Intent(FirstActivity.this, SecondActivity.class);
+                intent.putExtra(Constants.KEY_RES_ID, position);
+                startActivity(intent);
             }
+        });
 
-            @Override
-            public void onMotoSelected() {
-                displaySelected(1);
-            }
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
 
-            @Override
-            public void onPixelSelected() {
-                displaySelected(2);
-            }
-
-            @Override
-            public void onGalaxySelected() {
-                displaySelected(3);
-            }
-        };
-
-        chooserFragment.setSmartphoneSelectListener(smartphoneSelectListener);
 
     }
 
-    private void displaySelected(int selectedImageResId) {
-        if (inLandscapeMode) {
-            viewerFragment.displayResource(selectedImageResId);
-        } else {
-            Intent viewIntent = new Intent(FirstActivity.this, SecondActivity.class);
-            viewIntent.putExtra(Constants.KEY_RES_ID, selectedImageResId);
-            startActivity(viewIntent);
-        }
-    }
 }
