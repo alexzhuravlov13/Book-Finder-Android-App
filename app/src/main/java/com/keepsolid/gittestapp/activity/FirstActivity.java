@@ -7,6 +7,7 @@ import android.view.View;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.keepsolid.gittestapp.R;
 import com.keepsolid.gittestapp.adapter.SmartphoneRecyclerAdapter;
 import com.keepsolid.gittestapp.base.BaseActivity;
@@ -20,8 +21,11 @@ import com.keepsolid.gittestapp.utils.repository.SmartphoneRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.keepsolid.gittestapp.activity.AddActivity.NEW_SMRT_CODE;
+
 public class FirstActivity extends BaseActivity {
     private ChooserFragment chooserFragment;
+    private FloatingActionButton addBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +36,40 @@ public class FirstActivity extends BaseActivity {
 
         chooserFragment = (ChooserFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_chooser);
 
+        addBtn = findViewById(R.id.add_smrt);
 
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(FirstActivity.this, AddActivity.class);
+                startActivityForResult(intent, NEW_SMRT_CODE);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data == null) {
+            return;
+        }
+        String manufatrurer = data.getStringExtra("manufacturer");
+        String model = data.getStringExtra("model");
+        int year = data.getIntExtra("year", 2000);
+        int image = R.drawable.default_logo;
+        SmartphoneRepository smartphoneRepository = SmartphoneRepository.getInstance();
+
+        try {
+            image = smartphoneRepository.getLogoIdByBrand(manufatrurer);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Smartphone smartphone = new Smartphone(manufatrurer, model, year, image);
+        smartphoneRepository.addSmartphone(smartphone);
+
+        chooserFragment.update();
     }
 
 }

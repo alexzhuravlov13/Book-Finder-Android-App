@@ -20,4 +20,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_smrt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_middle_margin"
+        android:layout_marginBottom="@dimen/default_middle_margin"
+        android:backgroundTint="@color/colorAccent"
+        android:src="@android:drawable/ic_input_add"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_chooser"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_chooser" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

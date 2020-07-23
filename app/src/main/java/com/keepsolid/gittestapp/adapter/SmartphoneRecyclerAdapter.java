@@ -49,7 +49,7 @@ public class SmartphoneRecyclerAdapter extends RecyclerView.Adapter<SmartphoneRe
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Smartphone smartphone = smartphones.get(position);
-        SmartphoneRepository smartphoneRepository = new SmartphoneRepository();
+        SmartphoneRepository smartphoneRepository = SmartphoneRepository.getInstance();
 
         holder.smartphoneBrandImage.setImageResource(smartphoneRepository.getLogoIdByBrand(smartphone.getManufacturer()));
         holder.smartphoneName.setText(smartphone.toString());

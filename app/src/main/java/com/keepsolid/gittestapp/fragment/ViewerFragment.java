@@ -20,7 +20,7 @@ public class ViewerFragment extends Fragment {
 
     private static final String ID_ARG = "ID_ARG";
 
-    private SmartphoneRepository smartphoneRepository = new SmartphoneRepository();
+    private SmartphoneRepository smartphoneRepository = SmartphoneRepository.getInstance();
     private ImageView smartphoneImage;
     private TextView smartphoneName;
     private TextView smartphoneYear;

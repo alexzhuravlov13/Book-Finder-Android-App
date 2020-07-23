@@ -10,4 +10,9 @@
     <string name="smartphone_chooser">Smartphone Button chooser</string>
     <string name="smartphone_tab_chooser">Smartphone Tab Chooser</string>
     <string name="smartphone_chooser_manager">Smartphone Chooser With Manager</string>
+    <string name="add_new_smarthpone">Add New Smartphone</string>
+    <string name="enter_manufacturer_name">Enter Manufacturer Name</string>
+    <string name="enter_model_name">Enter Model Name</string>
+    <string name="enter_smrt_year">Enter Smartphone Year</string>
+    <string name="save">Save</string>
 </resources>

@@ -46,6 +46,7 @@ public class ChooserFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        smartphones = SmartphoneRepository.getInstance().getSmartphones();
 
     }
 
@@ -53,8 +54,6 @@ public class ChooserFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chooser, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_recycler);
-
-        smartphones = new SmartphoneRepository().getSmartphones();
 
         adapter = new SmartphoneRecyclerAdapter(smartphones);
 
@@ -73,5 +72,9 @@ public class ChooserFragment extends Fragment {
     }
 
 
+    public void update(){
+        adapter.notifyDataSetChanged();
+        recyclerView.smoothScrollToPosition(recyclerView.getBottom());
+    }
 
 }
