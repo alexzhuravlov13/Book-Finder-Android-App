@@ -1,5 +1,6 @@
 package com.keepsolid.gittestapp.activity;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,7 +10,6 @@ import android.view.View;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.keepsolid.gittestapp.R;
-import com.keepsolid.gittestapp.base.BaseActivity;
 
 public class AddActivity extends BaseActivity {
     public static final int NEW_SMRT_CODE = 1000;
@@ -25,6 +25,7 @@ public class AddActivity extends BaseActivity {
         setContentView(R.layout.activity_add);
 
         initToolbar(getString(R.string.add_new_smarthpone));
+        enableUpButton();
 
         manufacturer = findViewById(R.id.add_manufacturer);
         model = findViewById(R.id.add_model);

@@ -9,9 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.AddActivity"></activity>
+        <activity android:name=".activity.AddActivity"
+            android:parentActivityName=".activity.FirstActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".activity.SecondActivity"
+            android:parentActivityName=".activity.FirstActivity"
             android:hardwareAccelerated="true" />
         <activity
             android:name=".activity.FirstActivity"

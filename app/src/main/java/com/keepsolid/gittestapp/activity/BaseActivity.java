@@ -1,5 +1,6 @@
-package com.keepsolid.gittestapp.base;
+package com.keepsolid.gittestapp.activity;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -19,6 +20,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         toolbar.setTitle(title);
         int color = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary_light);
         toolbar.setTitleTextColor(color);
+    }
+
+    public void enableUpButton(){
+        setSupportActionBar(getToolbar());
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
+
     }
 
     public MaterialToolbar getToolbar() {
