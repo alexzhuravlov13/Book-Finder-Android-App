@@ -42,20 +42,20 @@ public class FirstActivity extends BaseActivity {
         if (data == null) {
             return;
         }
-        String manufatrurer = data.getStringExtra("manufacturer");
+        String manufacturer = data.getStringExtra("manufacturer");
         String model = data.getStringExtra("model");
         int year = data.getIntExtra("year", 2000);
         int image = R.drawable.default_logo;
         SmartphoneRepository smartphoneRepository = SmartphoneRepository.getInstance();
 
         try {
-            image = smartphoneRepository.getLogoIdByBrand(manufatrurer);
+            image = smartphoneRepository.getLogoIdByBrand(manufacturer);
         }
         catch (Exception e) {
             e.printStackTrace();
         }
 
-        Smartphone smartphone = new Smartphone(manufatrurer, model, year, image);
+        Smartphone smartphone = new Smartphone(manufacturer, model, year, image);
         smartphoneRepository.addSmartphone(smartphone);
 
         chooserFragment.update();
