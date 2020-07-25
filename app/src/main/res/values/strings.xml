@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">Git Test App</string>
-    <string name="about">About</string>
     <string name="select_smartphone">Select Smartphone</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="pixel">Google Pixel</string>
     <string name="galaxy">Samsung Galaxy S10</string>
     <string name="moto">Motorola Moto X</string>
@@ -15,4 +13,5 @@
     <string name="enter_model_name">Enter Model Name</string>
     <string name="enter_smrt_year">Enter Smartphone Year</string>
     <string name="save">Save</string>
+    <string name="ok">Ok</string>
 </resources>

@@ -5,4 +5,5 @@
     <dimen name="messageTextSize">15sp</dimen>
     <dimen name="toolbar_height">56dp</dimen>
     <dimen name="stroke_width">2dp</dimen>
+    <dimen name="smartphone_name_big">15sp</dimen>
 </resources>

@@ -28,6 +28,8 @@
 
             <TextView
                 android:id="@+id/smartphone_name"
+                android:textSize="@dimen/smartphone_name_big"
+                android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

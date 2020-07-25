@@ -1,10 +1,10 @@
 package com.keepsolid.gittestapp.activity;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.View;
 
 import com.google.android.material.button.MaterialButton;
@@ -27,27 +27,47 @@ public class AddActivity extends BaseActivity {
         initToolbar(getString(R.string.add_new_smarthpone));
         enableUpButton();
 
+        initViews();
+
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addNewSmartphone();
+            }
+        });
+    }
+
+    private void addNewSmartphone() {
+        Editable manufacturerText = manufacturer.getText();
+        Editable modelText = model.getText();
+        Editable yearText = year.getText();
+
+        if (manufacturerText.length() == 0 || modelText.length() == 0 || yearText.length() == 0) {
+            new AlertDialog.Builder(this).setTitle("Error").setMessage("Fill all fields").setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                }
+            }).create().show();
+        } else {
+            Intent intent = new Intent();
+            intent.putExtra("manufacturer", manufacturerText.toString());
+            intent.putExtra("model", modelText.toString());
+            int yearInt;
+
+            try {
+                yearInt = Integer.parseInt(yearText.toString());
+            } catch (Exception e) {
+                yearInt = 2000;
+            }
+            intent.putExtra("year", yearInt);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
+    }
+
+    private void initViews() {
         manufacturer = findViewById(R.id.add_manufacturer);
         model = findViewById(R.id.add_model);
         year = findViewById(R.id.add_year);
         saveBtn = findViewById(R.id.save_btn);
-        saveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.putExtra("manufacturer", manufacturer.getText().toString());
-                intent.putExtra("model", model.getText().toString());
-                int yearInt;
-                try {
-                    yearInt = Integer.parseInt(year.getText().toString());
-                }
-                catch (Exception e) {
-                    yearInt = 2000;
-                }
-                intent.putExtra("year", yearInt);
-                setResult(RESULT_OK, intent);
-                finish();
-            }
-        });
     }
 }
