@@ -58,7 +58,6 @@ public class AddActivity extends BaseActivity {
                 intent.putExtra("manufacturer", manufacturerText.toString().trim());
                 intent.putExtra("model", modelText.toString().trim());
                 int yearInt;
-
                 try {
                     String year = yearText.toString();
                     if (year.length() != 4) {
