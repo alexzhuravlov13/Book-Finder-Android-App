@@ -21,7 +21,9 @@ public class SecondActivity extends BaseActivity {
 
         viewerFragment = (ViewerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_viewer);
 
-        viewerFragment.displayResource(smartPhoneId);
+        if (viewerFragment != null) {
+            viewerFragment.displayResource(smartPhoneId);
+        }
 
     }
 }
