@@ -21,8 +21,23 @@ public class ViewerFragment extends Fragment {
     private ImageView smartphoneImage;
     private TextView smartphoneName;
     private TextView smartphoneYear;
+    private int smartphoneId;
 
     public ViewerFragment() {
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            smartphoneId = savedInstanceState.getInt("smartphoneId");
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("smartphoneId", smartphoneId);
     }
 
     @Nullable
@@ -32,10 +47,12 @@ public class ViewerFragment extends Fragment {
         smartphoneImage = view.findViewById(R.id.smartphone_image);
         smartphoneName = view.findViewById(R.id.smartphone_name);
         smartphoneYear = view.findViewById(R.id.smartphone_year);
+        displayResource(smartphoneId);
         return view;
     }
 
     public void displayResource(int resId) {
+        smartphoneId = resId;
         Smartphone smartphone = smartphoneRepository.getSmartphoneById(resId);
         smartphoneImage.setImageResource(smartphone.getImage());
         smartphoneImage.setContentDescription(smartphone.toString());

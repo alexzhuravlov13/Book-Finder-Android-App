@@ -22,6 +22,7 @@ public class FirstActivity extends BaseActivity {
     private OnSmartphoneRecyclerItemClickListener smartphoneSelectListener;
 
     private boolean isInLandscapeMode;
+    private int smartphoneId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,7 @@ public class FirstActivity extends BaseActivity {
         initViews();
 
         initListeners();
+
 
     }
 
@@ -94,6 +96,7 @@ public class FirstActivity extends BaseActivity {
 
     private void displaySelected(int selectedImageResId) {
         if (isInLandscapeMode) {
+            smartphoneId = selectedImageResId;
             viewerFragment.displayResource(selectedImageResId);
         } else {
             Intent viewIntent = new Intent(FirstActivity.this, SecondActivity.class);
