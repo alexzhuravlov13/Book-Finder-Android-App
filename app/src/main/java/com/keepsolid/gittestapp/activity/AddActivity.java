@@ -29,6 +29,10 @@ public class AddActivity extends BaseActivity {
 
         initViews();
 
+        initListeners();
+    }
+
+    private void initListeners() {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,25 +46,42 @@ public class AddActivity extends BaseActivity {
         Editable modelText = model.getText();
         Editable yearText = year.getText();
 
-        if (manufacturerText.length() == 0 || modelText.length() == 0 || yearText.length() == 0) {
-            new AlertDialog.Builder(this).setTitle("Error").setMessage("Fill all fields").setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                }
-            }).create().show();
+        if (manufacturerText != null && manufacturerText.length() == 0 || modelText != null && modelText.length() == 0 || yearText != null && yearText.length() == 0) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Error")
+                    .setMessage("Fill all fields")
+                    .setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                        }
+                    })
+                    .create()
+                    .show();
         } else {
             Intent intent = new Intent();
-            intent.putExtra("manufacturer", manufacturerText.toString());
-            intent.putExtra("model", modelText.toString());
+            intent.putExtra("manufacturer", manufacturerText.toString().trim());
+            intent.putExtra("model", modelText.toString().trim());
             int yearInt;
 
             try {
-                yearInt = Integer.parseInt(yearText.toString());
+                String year = yearText.toString();
+                if (year.length() != 4) {
+                    throw new Exception("Year length must be 4");
+                }
+                yearInt = Integer.parseInt(year);
+                intent.putExtra("year", yearInt);
+                setResult(RESULT_OK, intent);
+                finish();
             } catch (Exception e) {
-                yearInt = 2000;
+                new AlertDialog.Builder(this).
+                        setTitle("Error")
+                        .setMessage("Year must be in number format \"yyyy\"")
+                        .setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                            }
+                        })
+                        .create()
+                        .show();
             }
-            intent.putExtra("year", yearInt);
-            setResult(RESULT_OK, intent);
-            finish();
         }
     }
 

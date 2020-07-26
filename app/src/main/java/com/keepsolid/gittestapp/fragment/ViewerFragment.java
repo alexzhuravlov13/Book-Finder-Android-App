@@ -17,35 +17,13 @@ import com.keepsolid.gittestapp.utils.repository.SmartphoneRepository;
 
 public class ViewerFragment extends Fragment {
 
-
-    private static final String ID_ARG = "ID_ARG";
-
     private SmartphoneRepository smartphoneRepository = SmartphoneRepository.getInstance();
     private ImageView smartphoneImage;
     private TextView smartphoneName;
     private TextView smartphoneYear;
 
-    private int smartphoneId;
-
     public ViewerFragment() {
     }
-
-    public static ViewerFragment newInstance(int id) {
-        ViewerFragment viewerFragment = new ViewerFragment();
-        Bundle args = new Bundle();
-        args.putInt(ID_ARG, id);
-        viewerFragment.setArguments(args);
-        return viewerFragment;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            smartphoneId = getArguments().getInt(ID_ARG);
-        }
-    }
-
 
     @Nullable
     @Override
@@ -54,9 +32,6 @@ public class ViewerFragment extends Fragment {
         smartphoneImage = view.findViewById(R.id.smartphone_image);
         smartphoneName = view.findViewById(R.id.smartphone_name);
         smartphoneYear = view.findViewById(R.id.smartphone_year);
-
-        displayResource(smartphoneId);
-
         return view;
     }
 
