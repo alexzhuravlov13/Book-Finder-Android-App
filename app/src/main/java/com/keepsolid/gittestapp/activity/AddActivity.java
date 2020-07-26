@@ -46,7 +46,9 @@ public class AddActivity extends BaseActivity {
         Editable modelText = model.getText();
         Editable yearText = year.getText();
 
-        if (manufacturerText != null && manufacturerText.length() == 0 || modelText != null && modelText.length() == 0 || yearText != null && yearText.length() == 0) {
+        if (manufacturerText != null && manufacturerText.toString().trim().length() == 0 ||
+                modelText != null && modelText.toString().trim().length() == 0 ||
+                yearText != null && yearText.toString().trim().length() == 0) {
             new AlertDialog.Builder(this)
                     .setTitle("Error")
                     .setMessage("Fill all fields")
