@@ -12,9 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.keepsolid.gittestapp.R;
-import com.keepsolid.gittestapp.adapter.SmartphoneRecyclerAdapter;
-import com.keepsolid.gittestapp.model.Smartphone;
-import com.keepsolid.gittestapp.utils.listeners.OnSmartphoneRecyclerItemClickListener;
+import com.keepsolid.gittestapp.utils.listeners.OnBookRecyclerItemClickListener;
 import com.keepsolid.gittestapp.utils.repository.SmartphoneRepository;
 
 import java.util.List;
@@ -54,7 +52,7 @@ public class ChooserFragment extends Fragment {
         recyclerView.smoothScrollToPosition(recyclerView.getBottom());
     }
 
-    public void setSmartphoneSelectListener(OnSmartphoneRecyclerItemClickListener smartphoneSelectListener) {
+    public void setSmartphoneSelectListener(OnBookRecyclerItemClickListener smartphoneSelectListener) {
         adapter.setListener(smartphoneSelectListener);
     }
 }

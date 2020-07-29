@@ -8,9 +8,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.keepsolid.gittestapp.R;
 import com.keepsolid.gittestapp.fragment.ChooserFragment;
 import com.keepsolid.gittestapp.fragment.ViewerFragment;
-import com.keepsolid.gittestapp.model.Smartphone;
 import com.keepsolid.gittestapp.utils.Constants;
-import com.keepsolid.gittestapp.utils.listeners.OnSmartphoneRecyclerItemClickListener;
+import com.keepsolid.gittestapp.utils.listeners.OnBookRecyclerItemClickListener;
 import com.keepsolid.gittestapp.utils.repository.SmartphoneRepository;
 
 import static com.keepsolid.gittestapp.activity.AddActivity.NEW_SMRT_CODE;
@@ -19,7 +18,7 @@ public class FirstActivity extends BaseActivity {
     private ChooserFragment chooserFragment;
     private ViewerFragment viewerFragment;
     private FloatingActionButton addBtn;
-    private OnSmartphoneRecyclerItemClickListener smartphoneSelectListener;
+    private OnBookRecyclerItemClickListener smartphoneSelectListener;
 
     private boolean isInLandscapeMode;
     private int smartphoneId;
@@ -59,7 +58,7 @@ public class FirstActivity extends BaseActivity {
             }
         });
 
-        smartphoneSelectListener = new OnSmartphoneRecyclerItemClickListener() {
+        smartphoneSelectListener = new OnBookRecyclerItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
                 displaySelected(position);

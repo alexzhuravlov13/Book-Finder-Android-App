@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.keepsolid.gittestapp.R;
-import com.keepsolid.gittestapp.model.Smartphone;
 import com.keepsolid.gittestapp.utils.repository.SmartphoneRepository;
 
 public class ViewerFragment extends Fragment {
