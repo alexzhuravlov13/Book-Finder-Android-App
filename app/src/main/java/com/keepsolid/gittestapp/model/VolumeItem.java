@@ -3,12 +3,13 @@ package com.keepsolid.gittestapp.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class VolumeItem implements Parcelable {
     private String title;
-    private List<String> authors;
+    private List<String> authors = new ArrayList<>();
     private String publishedDate;
     private ImageLinks imageLinks = new ImageLinks("", "");
 

@@ -18,7 +18,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private void setTitle(String title) {
         toolbar.setTitle(title);
-        int color = ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary_light);
+        int color = ContextCompat.getColor(getApplicationContext(), android.R.color.white);
         toolbar.setTitleTextColor(color);
     }
 

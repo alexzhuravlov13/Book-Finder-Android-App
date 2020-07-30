@@ -2,6 +2,7 @@ package com.keepsolid.gittestapp.activity;
 
 import android.os.Bundle;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.keepsolid.gittestapp.R;
 import com.keepsolid.gittestapp.fragment.ViewerFragment;
 import com.keepsolid.gittestapp.model.VolumeItem;
@@ -25,6 +26,8 @@ public class SecondActivity extends BaseActivity {
         viewerFragment = (ViewerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_viewer);
 
         if (viewerFragment != null) {
+            MaterialToolbar toolbar = getToolbar();
+            toolbar.setTitle(volumeItem.getTitle());
             viewerFragment.displayResource(volumeItem);
         }
 

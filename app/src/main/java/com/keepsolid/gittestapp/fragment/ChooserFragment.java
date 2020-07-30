@@ -2,6 +2,7 @@ package com.keepsolid.gittestapp.fragment;
 
 import android.media.Image;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.keepsolid.gittestapp.R;
 import com.keepsolid.gittestapp.adapter.BookRecyclerAdapter;
 import com.keepsolid.gittestapp.api.ApiCallback;
@@ -28,6 +32,7 @@ import com.keepsolid.gittestapp.model.BookItem;
 import com.keepsolid.gittestapp.model.GoogleBooksResponse;
 import com.keepsolid.gittestapp.model.ImageLinks;
 import com.keepsolid.gittestapp.model.VolumeItem;
+import com.keepsolid.gittestapp.utils.KeyboardUtils;
 import com.keepsolid.gittestapp.utils.listeners.OnBookRecyclerItemClickListener;
 
 import java.util.ArrayList;
@@ -40,9 +45,9 @@ public class ChooserFragment extends Fragment {
     private RecyclerView recycler;
     private View loaderBlock;
 
-    private AppCompatButton goButton;
+    private MaterialButton goButton;
     private ProgressBar progressBar;
-    private AppCompatEditText userInput;
+    private TextInputEditText userInput;
     private ArrayList<BookItem> items;
     private BookRecyclerAdapter adapter;
     private OnBookRecyclerItemClickListener listener;
@@ -78,8 +83,13 @@ public class ChooserFragment extends Fragment {
     }
 
     private void handleSearchAction() {
-        //TODO: focus on text if empty, hide keyboard if not and find
-        loadBooks(userInput.getText().toString());
+        if (TextUtils.isEmpty(userInput.getText().toString())) {
+            userInput.requestFocus();
+        } else {
+            KeyboardUtils.hide(userInput);
+            loadBooks(userInput.getText().toString());
+        }
+
     }
 
     private void loadBooks(String title) {

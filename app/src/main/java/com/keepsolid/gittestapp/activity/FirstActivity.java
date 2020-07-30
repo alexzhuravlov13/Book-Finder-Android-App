@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.keepsolid.gittestapp.R;
 import com.keepsolid.gittestapp.fragment.ChooserFragment;
 import com.keepsolid.gittestapp.fragment.ViewerFragment;
@@ -25,7 +26,7 @@ public class FirstActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
 
-        initToolbar(getString(R.string.app_name));
+        initToolbar("Book finder");
 
         initViews();
 
@@ -54,6 +55,8 @@ public class FirstActivity extends BaseActivity {
 
     private void displaySelected(VolumeItem volumeItem) {
         if (isInLandscapeMode) {
+            MaterialToolbar toolbar = getToolbar();
+            toolbar.setTitle(volumeItem.getTitle());
             viewerFragment.displayResource(volumeItem);
         } else {
             Intent viewIntent = new Intent(FirstActivity.this, SecondActivity.class);
