@@ -67,4 +67,8 @@ public class ViewerFragment extends Fragment {
         String year = volumeItem.getPublishedDate().split("-")[0];
         publishedDate.setText(year);
     }
+
+    public AppCompatImageView getThumbnail() {
+        return thumbnail;
+    }
 }

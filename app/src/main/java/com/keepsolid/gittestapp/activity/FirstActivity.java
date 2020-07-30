@@ -2,7 +2,11 @@ package com.keepsolid.gittestapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.appcompat.widget.AppCompatImageView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.keepsolid.gittestapp.R;
