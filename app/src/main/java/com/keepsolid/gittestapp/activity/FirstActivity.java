@@ -1,5 +1,6 @@
 package com.keepsolid.gittestapp.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -20,6 +21,8 @@ import com.keepsolid.gittestapp.api.RestClient;
 import com.keepsolid.gittestapp.model.BookErrorItem;
 import com.keepsolid.gittestapp.model.BookItem;
 import com.keepsolid.gittestapp.model.GoogleBooksResponse;
+import com.keepsolid.gittestapp.model.VolumeItem;
+import com.keepsolid.gittestapp.utils.Constants;
 import com.keepsolid.gittestapp.utils.listeners.OnBookRecyclerItemClickListener;
 
 import java.util.ArrayList;
@@ -55,12 +58,12 @@ public class FirstActivity extends BaseActivity {
 
         items = new ArrayList<>();
 
+        initListeners();
+
         adapter = new BookRecyclerAdapter(items, this, listener);
 
         recycler.setLayoutManager(new LinearLayoutManager(this));
         recycler.setAdapter(adapter);
-
-        initListeners();
 
     }
 
@@ -74,10 +77,10 @@ public class FirstActivity extends BaseActivity {
         RestClient.getInstance().getApiService().getBooks(title).enqueue(new ApiCallback<GoogleBooksResponse>() {
             @Override
             public void success(Response<GoogleBooksResponse> response) {
-                    items.clear();
-                    items.addAll(response.body().getBookItems());
-                    adapter.notifyDataSetChanged();
-                    hideProgressBlock();
+                items.clear();
+                items.addAll(response.body().getBookItems());
+                adapter.notifyDataSetChanged();
+                hideProgressBlock();
             }
 
             @Override
@@ -119,8 +122,8 @@ public class FirstActivity extends BaseActivity {
     private void initListeners() {
         listener = new OnBookRecyclerItemClickListener() {
             @Override
-            public void onItemClick(View v, int position) {
-                displaySelected(position);
+            public void onItemClick(View v, int position, VolumeItem volumeItem) {
+                displaySelected(volumeItem);
             }
         };
 
@@ -134,7 +137,7 @@ public class FirstActivity extends BaseActivity {
         userInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                if(i == EditorInfo.IME_ACTION_GO){
+                if (i == EditorInfo.IME_ACTION_GO) {
                     handleSearchAction();
                     return true;
                 }
@@ -144,6 +147,9 @@ public class FirstActivity extends BaseActivity {
 
     }
 
-    private void displaySelected(int selectedImageResId) {
+    private void displaySelected(VolumeItem volumeItem) {
+        Intent viewIntent = new Intent(FirstActivity.this, SecondActivity.class);
+        viewIntent.putExtra(Constants.KEY_RES_ID, volumeItem);
+        startActivity(viewIntent);
     }
 }

@@ -27,6 +27,10 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
     private Context ctx;
     private OnBookRecyclerItemClickListener listener;
 
+    public void setListener(OnBookRecyclerItemClickListener listener) {
+        this.listener = listener;
+    }
+
     public BookRecyclerAdapter(ArrayList<BookItem> items, Context ctx, OnBookRecyclerItemClickListener listener) {
         this.items = items;
         this.ctx = ctx;
@@ -57,13 +61,13 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
         Log.i("BOOKITEM", bookItem.toString());
 
         holder.title.setText(bookItem.getVolumeInfo().getTitle());
-        Glide.with(holder.thumbnail).load(bookItem.getVolumeInfo().getImageLinks().getSmallThumbnail()).placeholder(R.drawable.book);
+        Glide.with(holder.thumbnail).load(bookItem.getVolumeInfo().getImageLinks().getSmallThumbnail()).placeholder(R.drawable.book).into(holder.thumbnail);
 
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (listener!=null) {
-                    listener.onItemClick(view, holder.getAdapterPosition());
+                    listener.onItemClick(view, holder.getAdapterPosition(), items.get(holder.getAdapterPosition()).getVolumeInfo());
                 }
             }
         });

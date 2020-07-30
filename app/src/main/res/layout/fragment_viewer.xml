@@ -19,10 +19,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
             <!-- Media -->
             <ImageView
-                android:id="@+id/smartphone_image"
+                android:id="@+id/thumbnail"
                 android:layout_margin="@dimen/default_middle_margin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -36,13 +36,21 @@
 
                 <!-- Title, secondary and supporting text -->
                 <TextView
-                    android:id="@+id/smartphone_name"
+                    android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?attr/textAppearanceHeadline6" />
 
                 <TextView
-                    android:id="@+id/smartphone_year"
+                android:id="@+id/publishedDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?android:attr/textColorSecondary" />
+
+                <TextView
+                    android:id="@+id/authors"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"

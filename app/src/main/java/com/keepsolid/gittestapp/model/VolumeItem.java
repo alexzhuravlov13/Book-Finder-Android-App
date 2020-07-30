@@ -1,14 +1,17 @@
 package com.keepsolid.gittestapp.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class VolumeItem {
+public class VolumeItem implements Parcelable {
     private String title;
     private List<String> authors;
     private String publishedDate;
-    private ImageLinks imageLinks;
+    private ImageLinks imageLinks = new ImageLinks("", "");
 
     public VolumeItem() {
     }
@@ -17,8 +20,29 @@ public class VolumeItem {
         this.title = title;
         this.authors = authors;
         this.publishedDate = publishedDate;
+        if (imageLinks!=null){
+            this.imageLinks = imageLinks;
+        }
         this.imageLinks = imageLinks;
     }
+
+    protected VolumeItem(Parcel in) {
+        title = in.readString();
+        authors = in.createStringArrayList();
+        publishedDate = in.readString();
+    }
+
+    public static final Creator<VolumeItem> CREATOR = new Creator<VolumeItem>() {
+        @Override
+        public VolumeItem createFromParcel(Parcel in) {
+            return new VolumeItem(in);
+        }
+
+        @Override
+        public VolumeItem[] newArray(int size) {
+            return new VolumeItem[size];
+        }
+    };
 
     public String getTitle() {
         return title;
@@ -76,5 +100,17 @@ public class VolumeItem {
     @Override
     public int hashCode() {
         return Objects.hash(title, authors, publishedDate, imageLinks);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(title);
+        parcel.writeStringList(authors);
+        parcel.writeString(publishedDate);
     }
 }
