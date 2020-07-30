@@ -6,33 +6,36 @@ import java.util.Objects;
 
 public class BookItem {
     private String id;
-    private String title;
-    private List<String> authors;
-    private String publishedDate;
-    private String thumbnail;
+    private VolumeItem volumeInfo;
 
     public BookItem() {
-        this.authors = new ArrayList<>();
     }
 
-    public BookItem(String id, String title, List<String> authors, String publishedDate, String thumbnail) {
+    public BookItem(String id, VolumeItem volumeInfo) {
         this.id = id;
-        this.title = title;
-        if (authors == null) {
-            this.authors = new ArrayList<>();
-        } else {
-            this.authors = authors;
-        }
-        this.publishedDate = publishedDate;
-        this.thumbnail = thumbnail;
+        this.volumeInfo = volumeInfo;
     }
 
-    public String getThumbnail() {
-        return thumbnail;
+    @Override
+    public String toString() {
+        return "BookItem{" +
+                "id='" + id + '\'' +
+                ", volumeInfo=" + volumeInfo +
+                '}';
     }
 
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BookItem bookItem = (BookItem) o;
+        return Objects.equals(id, bookItem.id) &&
+                Objects.equals(volumeInfo, bookItem.volumeInfo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, volumeInfo);
     }
 
     public String getId() {
@@ -43,55 +46,11 @@ public class BookItem {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public VolumeItem getVolumeInfo() {
+        return volumeInfo;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public List<String> getAuthors() {
-        return authors;
-    }
-
-    public void setAuthors(List<String> authors) {
-        this.authors = authors;
-    }
-
-    public String getPublishedDate() {
-        return publishedDate;
-    }
-
-    public void setPublishedDate(String publishedDate) {
-        this.publishedDate = publishedDate;
-    }
-
-    @Override
-    public String toString() {
-        return "BookItem{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", authors=" + authors +
-                ", publishedDate='" + publishedDate + '\'' +
-                ", thumbnail='" + thumbnail + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BookItem bookItem = (BookItem) o;
-        return Objects.equals(id, bookItem.id) &&
-                Objects.equals(title, bookItem.title) &&
-                Objects.equals(authors, bookItem.authors) &&
-                Objects.equals(publishedDate, bookItem.publishedDate) &&
-                Objects.equals(thumbnail, bookItem.thumbnail);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, title, authors, publishedDate, thumbnail);
+    public void setVolumeInfo(VolumeItem volumeInfo) {
+        this.volumeInfo = volumeInfo;
     }
 }

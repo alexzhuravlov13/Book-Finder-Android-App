@@ -1,6 +1,7 @@
 package com.keepsolid.gittestapp.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.keepsolid.gittestapp.R;
 import com.keepsolid.gittestapp.model.BookItem;
+import com.keepsolid.gittestapp.model.VolumeItem;
 import com.keepsolid.gittestapp.utils.listeners.OnBookRecyclerItemClickListener;
 
 import java.util.ArrayList;
@@ -42,14 +44,20 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
     @Override
     public void onBindViewHolder(@NonNull final BookRecyclerAdapter.ViewHolder holder, int position) {
         BookItem bookItem = items.get(position);
-        Log.e("BOOKITEM", bookItem.toString());
-        holder.title.setText("Title");
-        holder.publishedDate.setText("1995");
-        Glide.with(holder.thumbnail).load(R.drawable.book).placeholder(R.drawable.ic_account_multiple_grey600_24dp);
+        VolumeItem volumeInfo = bookItem.getVolumeInfo();
 
-        /*holder.title.setText(bookItem.getTitle());
-        holder.publishedDate.setText(bookItem.getPublishedDate());*/
-        //Glide.with(holder.thumbnail).load(bookItem.getThumbnail()).placeholder(R.drawable.book);
+        if(TextUtils.isEmpty(volumeInfo.getPublishedDate())){
+            holder.publishedDate.setVisibility(View.GONE);
+        }
+        else {
+            String year = volumeInfo.getPublishedDate().split("-")[0];
+            holder.publishedDate.setText(year);
+            holder.publishedDate.setVisibility(View.VISIBLE);
+        }
+        Log.i("BOOKITEM", bookItem.toString());
+
+        holder.title.setText(bookItem.getVolumeInfo().getTitle());
+        Glide.with(holder.thumbnail).load(bookItem.getVolumeInfo().getImageLinks().getSmallThumbnail()).placeholder(R.drawable.book);
 
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
