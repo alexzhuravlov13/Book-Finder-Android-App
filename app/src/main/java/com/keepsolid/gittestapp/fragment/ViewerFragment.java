@@ -61,8 +61,9 @@ public class ViewerFragment extends Fragment {
         thumbnail.setContentDescription(volumeItem.getTitle());
 
         title.setText(volumeItem.getTitle());
-
-        authors.setText(volumeItem.getAuthors().toString());
-        publishedDate.setText(volumeItem.getPublishedDate());
+        String authorsString = volumeItem.getAuthors().toString();
+        authors.setText(authorsString.substring(1, authorsString.length()-1));
+        String year = volumeItem.getPublishedDate().split("-")[0];
+        publishedDate.setText(year);
     }
 }

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="@dimen/book_item_height"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="@dimen/default_margin">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/thumbnail"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="@dimen/thumbnail_mini"
+        android:layout_height="@dimen/thumbnail_mini"
         android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="@dimen/default_margin" />
+        android:layout_centerVertical="true" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,8 +19,8 @@
         android:layout_marginStart="@dimen/default_middle_margin"
         android:layout_marginEnd="@dimen/default_margin"
         android:layout_toEndOf="@id/thumbnail"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
+        android:paddingTop="@dimen/default_middle_margin"
+        android:paddingBottom="@dimen/default_middle_margin"
         android:layout_height="wrap_content">
 
 
@@ -28,7 +28,7 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="@dimen/title_size"
             android:textStyle="bold"
             android:ellipsize="end"
             tools:text="SomeRepo"

@@ -5,4 +5,7 @@
     <dimen name="default_big_margin">24dp</dimen>
     <dimen name="default_middle_margin">8dp</dimen>
     <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="title_size">18sp</dimen>
+    <dimen name="thumbnail_mini">56dp</dimen>
+    <dimen name="book_item_height">72dp</dimen>
 </resources>
