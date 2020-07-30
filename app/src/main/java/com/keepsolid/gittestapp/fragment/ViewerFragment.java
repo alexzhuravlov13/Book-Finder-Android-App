@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -18,7 +19,7 @@ import com.keepsolid.gittestapp.model.VolumeItem;
 
 public class ViewerFragment extends Fragment {
 
-    private ImageView thumbnail;
+    private AppCompatImageView thumbnail;
     private TextView title;
     private TextView authors;
     private TextView publishedDate;
@@ -57,7 +58,7 @@ public class ViewerFragment extends Fragment {
         Log.i("VOLUMEITEM_LOG", volumeItem.toString());
 
 
-        Glide.with(thumbnail).load(volumeItem.getImageLinks().getSmallThumbnail()).placeholder(R.drawable.book).into(thumbnail);
+        Glide.with(thumbnail.getContext()).load(volumeItem.getImageLinks().getThumbnail()).placeholder(R.drawable.book).dontAnimate().fitCenter().into(thumbnail);
         thumbnail.setContentDescription(volumeItem.getTitle());
 
         title.setText(volumeItem.getTitle());
