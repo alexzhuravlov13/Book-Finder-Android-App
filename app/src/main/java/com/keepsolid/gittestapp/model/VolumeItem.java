@@ -2,6 +2,7 @@ package com.keepsolid.gittestapp.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,9 @@ public class VolumeItem implements Parcelable {
         title = in.readString();
         authors = in.createStringArrayList();
         publishedDate = in.readString();
+        imageLinks= in.readParcelable(ImageLinks.class.getClassLoader());
     }
+
 
     public static final Creator<VolumeItem> CREATOR = new Creator<VolumeItem>() {
         @Override
@@ -102,6 +105,7 @@ public class VolumeItem implements Parcelable {
         return Objects.hash(title, authors, publishedDate, imageLinks);
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -112,5 +116,6 @@ public class VolumeItem implements Parcelable {
         parcel.writeString(title);
         parcel.writeStringList(authors);
         parcel.writeString(publishedDate);
+        parcel.writeParcelable(imageLinks, i);
     }
 }

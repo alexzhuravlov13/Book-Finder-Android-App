@@ -1,8 +1,11 @@
 package com.keepsolid.gittestapp.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Objects;
 
-public class ImageLinks {
+public class ImageLinks implements Parcelable {
     private String smallThumbnail;
     private String thumbnail;
 
@@ -13,6 +16,23 @@ public class ImageLinks {
         this.smallThumbnail = smallThumbnail;
         this.thumbnail = thumbnail;
     }
+
+    protected ImageLinks(Parcel in) {
+        smallThumbnail = in.readString();
+        thumbnail = in.readString();
+    }
+
+    public static final Creator<ImageLinks> CREATOR = new Creator<ImageLinks>() {
+        @Override
+        public ImageLinks createFromParcel(Parcel in) {
+            return new ImageLinks(in);
+        }
+
+        @Override
+        public ImageLinks[] newArray(int size) {
+            return new ImageLinks[size];
+        }
+    };
 
     public String getSmallThumbnail() {
         return smallThumbnail;
@@ -50,5 +70,16 @@ public class ImageLinks {
     @Override
     public int hashCode() {
         return Objects.hash(smallThumbnail, thumbnail);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(smallThumbnail);
+        parcel.writeString(thumbnail);
     }
 }

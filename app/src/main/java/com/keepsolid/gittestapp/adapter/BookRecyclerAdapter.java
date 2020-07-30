@@ -64,7 +64,7 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
         Log.i("BOOKITEM", bookItem.toString());
 
         holder.title.setText(bookItem.getVolumeInfo().getTitle());
-        Glide.with(holder.thumbnail.getContext()).load(bookItem.getVolumeInfo().getImageLinks().getSmallThumbnail()).placeholder(R.drawable.book).dontAnimate().fitCenter().into(holder.thumbnail);
+        Glide.with(holder.thumbnail.getContext()).load(bookItem.getVolumeInfo().getImageLinks().getSmallThumbnail()).placeholder(R.drawable.book).into(holder.thumbnail);
 
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override

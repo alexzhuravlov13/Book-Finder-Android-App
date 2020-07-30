@@ -58,7 +58,7 @@ public class ViewerFragment extends Fragment {
         Log.i("VOLUMEITEM_LOG", volumeItem.toString());
 
 
-        Glide.with(thumbnail.getContext()).load(volumeItem.getImageLinks().getThumbnail()).placeholder(R.drawable.book).dontAnimate().fitCenter().into(thumbnail);
+        Glide.with(thumbnail.getContext()).load(volumeItem.getImageLinks().getThumbnail()).placeholder(R.drawable.book).into(thumbnail);
         thumbnail.setContentDescription(volumeItem.getTitle());
 
         title.setText(volumeItem.getTitle());
