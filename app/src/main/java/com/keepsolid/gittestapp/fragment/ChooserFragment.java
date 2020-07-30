@@ -1,6 +1,5 @@
 package com.keepsolid.gittestapp.fragment;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -14,13 +13,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.keepsolid.gittestapp.R;
@@ -30,12 +26,11 @@ import com.keepsolid.gittestapp.api.RestClient;
 import com.keepsolid.gittestapp.model.BookErrorItem;
 import com.keepsolid.gittestapp.model.BookItem;
 import com.keepsolid.gittestapp.model.GoogleBooksResponse;
-import com.keepsolid.gittestapp.model.ImageLinks;
-import com.keepsolid.gittestapp.model.VolumeItem;
 import com.keepsolid.gittestapp.utils.KeyboardUtils;
 import com.keepsolid.gittestapp.utils.listeners.OnBookRecyclerItemClickListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Response;
 
@@ -45,7 +40,7 @@ public class ChooserFragment extends Fragment {
     private RecyclerView recycler;
     private View loaderBlock;
 
-    private MaterialButton goButton;
+    private FloatingActionButton goButton;
     private ProgressBar progressBar;
     private TextInputEditText userInput;
     private ArrayList<BookItem> items;
@@ -68,7 +63,7 @@ public class ChooserFragment extends Fragment {
         loaderBlock = view.findViewById(R.id.loader_block);
         progressBar = view.findViewById(R.id.pb_progress);
         userInput = view.findViewById(R.id.et_user_input);
-        goButton = view.findViewById(R.id.btn_go);
+        goButton = view.findViewById(R.id.btn_find);
 
         items = new ArrayList<>();
 
@@ -98,7 +93,11 @@ public class ChooserFragment extends Fragment {
             @Override
             public void success(Response<GoogleBooksResponse> response) {
                 items.clear();
-                items.addAll(response.body().getBookItems());
+                if (response.body().getTotalItems()==0) {
+                    makeErrorToast("No Such Items");
+                } else {
+                    items.addAll(response.body().getBookItems());
+                }
                 adapter.notifyDataSetChanged();
                 hideProgressBlock();
             }

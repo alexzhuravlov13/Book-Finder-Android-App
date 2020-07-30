@@ -25,7 +25,7 @@ public class RestClient {
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Uri.class, new UriDeserializer())
+                .registerTypeAdapter(Uri.class, new DateDeserializer())
                 .create();
 
         retrofit = new Retrofit.Builder()
