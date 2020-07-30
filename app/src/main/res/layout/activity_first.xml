@@ -10,29 +10,60 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar_layout" />
 
-    <fragment
-        android:id="@+id/fragment_chooser"
-        android:name="com.keepsolid.gittestapp.fragment.ChooserFragment"
+    <LinearLayout
+        android:id="@+id/ll_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_user_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:maxLines="1"
+            android:inputType="text"
+            android:imeOptions="actionGo"
+            android:layout_weight="3"
+            android:hint="Book title to find" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_go"
+            style="@style/AppButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Go" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/ll_search" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_smrt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        android:layout_marginEnd="@dimen/default_middle_margin"
-        android:layout_marginBottom="@dimen/default_middle_margin"
-        android:backgroundTint="@color/colorAccent"
-        app:tint="@color/colorPrimary_light"
-        android:src="@android:drawable/ic_input_add"
-        app:layout_constraintBottom_toBottomOf="@+id/fragment_chooser"
-        app:layout_constraintEnd_toEndOf="@+id/fragment_chooser" />
+    <LinearLayout
+        android:id="@+id/loader_block"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/loader_background"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <ProgressBar
+            android:id="@+id/pb_progress"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

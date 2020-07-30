@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class BookItem {
-    private int id;
+    private String id;
     private String title;
     private List<String> authors;
     private String publishedDate;
@@ -15,7 +15,7 @@ public class BookItem {
         this.authors = new ArrayList<>();
     }
 
-    public BookItem(int id, String title, List<String> authors, String publishedDate, String thumbnail) {
+    public BookItem(String id, String title, List<String> authors, String publishedDate, String thumbnail) {
         this.id = id;
         this.title = title;
         if (authors == null) {
@@ -35,11 +35,11 @@ public class BookItem {
         this.thumbnail = thumbnail;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -70,8 +70,11 @@ public class BookItem {
     @Override
     public String toString() {
         return "BookItem{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", title='" + title + '\'' +
+                ", authors=" + authors +
+                ", publishedDate='" + publishedDate + '\'' +
+                ", thumbnail='" + thumbnail + '\'' +
                 '}';
     }
 
@@ -80,7 +83,7 @@ public class BookItem {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BookItem bookItem = (BookItem) o;
-        return id == bookItem.id &&
+        return Objects.equals(id, bookItem.id) &&
                 Objects.equals(title, bookItem.title) &&
                 Objects.equals(authors, bookItem.authors) &&
                 Objects.equals(publishedDate, bookItem.publishedDate) &&

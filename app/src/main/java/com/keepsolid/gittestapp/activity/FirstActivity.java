@@ -1,27 +1,45 @@
 package com.keepsolid.gittestapp.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.keepsolid.gittestapp.R;
-import com.keepsolid.gittestapp.fragment.ChooserFragment;
-import com.keepsolid.gittestapp.fragment.ViewerFragment;
-import com.keepsolid.gittestapp.utils.Constants;
+import com.keepsolid.gittestapp.adapter.BookRecyclerAdapter;
+import com.keepsolid.gittestapp.api.ApiCallback;
+import com.keepsolid.gittestapp.api.RestClient;
+import com.keepsolid.gittestapp.model.BookErrorItem;
+import com.keepsolid.gittestapp.model.BookItem;
+import com.keepsolid.gittestapp.model.GoogleBooksResponse;
 import com.keepsolid.gittestapp.utils.listeners.OnBookRecyclerItemClickListener;
-import com.keepsolid.gittestapp.utils.repository.SmartphoneRepository;
 
-import static com.keepsolid.gittestapp.activity.AddActivity.NEW_SMRT_CODE;
+import java.util.ArrayList;
+
+import retrofit2.Response;
+
 
 public class FirstActivity extends BaseActivity {
-    private ChooserFragment chooserFragment;
-    private ViewerFragment viewerFragment;
-    private FloatingActionButton addBtn;
-    private OnBookRecyclerItemClickListener smartphoneSelectListener;
+    private RecyclerView recycler;
+    private View loaderBlock;
+
+    private AppCompatButton goButton;
+    private ProgressBar progressBar;
+    private AppCompatEditText userInput;
+    private ArrayList<BookItem> items;
+    private BookRecyclerAdapter adapter;
+
+    private OnBookRecyclerItemClickListener listener;
 
     private boolean isInLandscapeMode;
-    private int smartphoneId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,78 +48,102 @@ public class FirstActivity extends BaseActivity {
 
         initToolbar(getString(R.string.app_name));
 
-        initViews();
+        loaderBlock = findViewById(R.id.loader_block);
+        recycler = findViewById(R.id.rv_recycler);
+        userInput = findViewById(R.id.et_user_input);
+        goButton = findViewById(R.id.btn_go);
+
+        items = new ArrayList<>();
+
+        adapter = new BookRecyclerAdapter(items, this, listener);
+
+        recycler.setLayoutManager(new LinearLayoutManager(this));
+        recycler.setAdapter(adapter);
 
         initListeners();
 
+    }
 
+    private void handleSearchAction() {
+        //TODO: focus on text if empty, hide keyboard if not and find
+        loadBooks(userInput.getText().toString());
+    }
+
+    private void loadBooks(String title) {
+        showProgressBlock();
+        RestClient.getInstance().getApiService().getBooks(title).enqueue(new ApiCallback<GoogleBooksResponse>() {
+            @Override
+            public void success(Response<GoogleBooksResponse> response) {
+                    items.clear();
+                    items.addAll(response.body().getBookItems());
+                    adapter.notifyDataSetChanged();
+                    hideProgressBlock();
+            }
+
+            @Override
+            public void failure(BookErrorItem bookErrorItem) {
+                makeErrorToast(bookErrorItem.getMessage());
+                hideProgressBlock();
+            }
+        });
+    }
+
+    private void makeErrorToast(String errorMessage) {
+        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+    }
+
+    private void showProgressBlock() {
+        if (loaderBlock != null) {
+            loaderBlock.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void hideProgressBlock() {
+        if (loaderBlock != null) {
+            loaderBlock.setVisibility(View.GONE);
+        }
     }
 
     private void initViews() {
-        chooserFragment = (ChooserFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_chooser);
+
         isInLandscapeMode = findViewById(R.id.fragment_viewer) != null;
 
         if (isInLandscapeMode) {
-            viewerFragment = (ViewerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_viewer);
+            //viewerFragment = (ViewerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_viewer);
         }
 
-        addBtn = findViewById(R.id.add_smrt);
+        //TODO: 2nd fragment in landscape
 
     }
 
     private void initListeners() {
-        addBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(FirstActivity.this, AddActivity.class);
-                startActivityForResult(intent, NEW_SMRT_CODE);
-            }
-        });
-
-        smartphoneSelectListener = new OnBookRecyclerItemClickListener() {
+        listener = new OnBookRecyclerItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
                 displaySelected(position);
             }
         };
 
-        chooserFragment.setSmartphoneSelectListener(smartphoneSelectListener);
-    }
+        goButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                handleSearchAction();
+            }
+        });
 
+        userInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if(i == EditorInfo.IME_ACTION_GO){
+                    handleSearchAction();
+                    return true;
+                }
+                return false;
+            }
+        });
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (data == null) {
-            return;
-        }
-        String manufacturer = data.getStringExtra("manufacturer");
-        String model = data.getStringExtra("model");
-        int year = data.getIntExtra("year", 2000);
-        int image = R.drawable.default_logo;
-        SmartphoneRepository smartphoneRepository = SmartphoneRepository.getInstance();
-
-        try {
-            image = smartphoneRepository.getLogoIdByBrand(manufacturer);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        Smartphone smartphone = new Smartphone(manufacturer, model, year, image);
-        smartphoneRepository.addSmartphone(smartphone);
-
-        chooserFragment.update();
     }
 
     private void displaySelected(int selectedImageResId) {
-        if (isInLandscapeMode) {
-            smartphoneId = selectedImageResId;
-            viewerFragment.displayResource(selectedImageResId);
-        } else {
-            Intent viewIntent = new Intent(FirstActivity.this, SecondActivity.class);
-            viewIntent.putExtra(Constants.KEY_RES_ID, selectedImageResId);
-            startActivity(viewIntent);
-        }
-
     }
 }
