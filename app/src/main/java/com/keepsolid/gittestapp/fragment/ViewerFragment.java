@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -63,9 +62,13 @@ public class ViewerFragment extends Fragment {
 
         title.setText(volumeItem.getTitle());
         String authorsString = volumeItem.getAuthors().toString();
-        authors.setText(authorsString.substring(1, authorsString.length()-1));
-        String year = volumeItem.getPublishedDate().split("-")[0];
-        publishedDate.setText(year);
+        authors.setText(authorsString.substring(1, authorsString.length() - 1));
+        String publishedDate = volumeItem.getPublishedDate();
+        String year = "";
+        if (publishedDate != null) {
+            year = publishedDate.split("-")[0];
+        }
+        this.publishedDate.setText(year);
     }
 
     public AppCompatImageView getThumbnail() {
