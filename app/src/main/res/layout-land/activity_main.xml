@@ -12,7 +12,7 @@
 
     <fragment
         android:id="@+id/fragment_chooser"
-        android:name="com.keepsolid.gittestapp.fragment.ChooserFragment"
+        android:name="com.keepsolid.bookfinderapp.fragment.ChooserFragment"
         android:background="@color/primaryLightColor"
         android:layout_width="300dp"
         android:layout_height="0dp"
@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/fragment_viewer"
-        android:name="com.keepsolid.gittestapp.fragment.ViewerFragment"
+        android:name="com.keepsolid.bookfinderapp.fragment.ViewerFragment"
         android:background="@color/primaryLightColor"
         android:layout_width="0dp"
         android:layout_height="0dp"
