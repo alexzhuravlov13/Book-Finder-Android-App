@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.keepsolid.gittestapp.R;
+import com.keepsolid.gittestapp.model.ImageLinks;
 import com.keepsolid.gittestapp.model.VolumeItem;
 
 import java.util.List;
@@ -88,24 +89,29 @@ public class ViewerFragment extends Fragment {
 
         Log.i("VOLUMEITEM_LOG", volumeItem.toString());
 
+        ImageLinks imageLinks = volumeItem.getImageLinks();
+        if (imageLinks != null && imageLinks.getThumbnail() != null) {
+            Glide.with(thumbnail.getContext()).load(imageLinks.getThumbnail()).placeholder(R.drawable.book).into(thumbnail);
+        } else {
+            Glide.with(thumbnail.getContext()).load(R.drawable.book).into(thumbnail);
+        }
 
-        Glide.with(thumbnail.getContext()).load(volumeItem.getImageLinks().getThumbnail()).placeholder(R.drawable.book).into(thumbnail);
         thumbnail.setContentDescription(volumeItem.getTitle());
 
         title.setText(volumeItem.getTitle());
 
-        List<String> authors = volumeItem.getAuthors();
-        if (authors.size() == 0) {
-            authors_layout.setVisibility(View.INVISIBLE);
+        List<String> volumeItemAuthors = volumeItem.getAuthors();
+        if (volumeItemAuthors == null || volumeItemAuthors.size() == 0) {
+            authors.setText(R.string.unknown);
         } else {
             authors_layout.setVisibility(View.VISIBLE);
-            String authorsString = authors.toString();
-            this.authors.setText(authorsString.substring(1, authorsString.length() - 1));
+            String authorsString = volumeItemAuthors.toString();
+            authors.setText(authorsString.substring(1, authorsString.length() - 1));
         }
 
         String volumePublishedDate = volumeItem.getPublishedDate();
-        if (volumePublishedDate.trim().isEmpty()) {
-            publishedDate_layout.setVisibility(View.INVISIBLE);
+        if (volumePublishedDate == null || volumePublishedDate.trim().isEmpty()) {
+            publishedDate.setText(R.string.unknown);
         } else {
             publishedDate_layout.setVisibility(View.VISIBLE);
             String year = volumePublishedDate.split("-")[0];
@@ -114,8 +120,8 @@ public class ViewerFragment extends Fragment {
         }
 
         String volumeItemPublisher = volumeItem.getPublisher();
-        if (volumeItemPublisher.trim().isEmpty()) {
-            publisher_layout.setVisibility(View.INVISIBLE);
+        if (volumeItemPublisher == null || volumeItemPublisher.trim().isEmpty()) {
+            publisher.setText(R.string.unknown);
         } else {
             publisher_layout.setVisibility(View.VISIBLE);
             publisher.setText(volumeItemPublisher);
@@ -142,4 +148,5 @@ public class ViewerFragment extends Fragment {
     public AppCompatImageView getThumbnail() {
         return thumbnail;
     }
+
 }

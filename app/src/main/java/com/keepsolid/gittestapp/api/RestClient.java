@@ -1,7 +1,5 @@
 package com.keepsolid.gittestapp.api;
 
-import android.net.Uri;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -25,7 +23,6 @@ public class RestClient {
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Uri.class, new DateDeserializer())
                 .create();
 
         retrofit = new Retrofit.Builder()

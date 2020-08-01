@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.keepsolid.gittestapp.R;
+import com.keepsolid.gittestapp.activity.FirstActivity;
 import com.keepsolid.gittestapp.adapter.BookRecyclerAdapter;
 import com.keepsolid.gittestapp.api.ApiCallback;
 import com.keepsolid.gittestapp.api.RestClient;
@@ -27,10 +28,10 @@ import com.keepsolid.gittestapp.model.BookErrorItem;
 import com.keepsolid.gittestapp.model.BookItem;
 import com.keepsolid.gittestapp.model.GoogleBooksResponse;
 import com.keepsolid.gittestapp.utils.KeyboardUtils;
+import com.keepsolid.gittestapp.utils.db.AppDatabase;
 import com.keepsolid.gittestapp.utils.listeners.OnBookRecyclerItemClickListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Response;
 
@@ -66,6 +67,7 @@ public class ChooserFragment extends Fragment {
         goButton = view.findViewById(R.id.btn_find);
 
         items = new ArrayList<>();
+        checkCachedItems();
 
         adapter = new BookRecyclerAdapter(items, getContext());
 
@@ -93,12 +95,22 @@ public class ChooserFragment extends Fragment {
             @Override
             public void success(Response<GoogleBooksResponse> response) {
                 items.clear();
-                if (response.body().getTotalItems()==0) {
+                if (response.body().getTotalItems() == 0) {
                     makeErrorToast("No Such Items");
                 } else {
                     items.addAll(response.body().getBookItems());
                 }
+                FirstActivity activity = (FirstActivity) getActivity();
+                AppDatabase database = null;
+                if (activity != null) {
+                    database = activity.getDatabase();
+                }
+                if (database != null) {
+                    database.bookItemDao().deleteAll();
+                    database.bookItemDao().insert(items);
+                }
                 adapter.notifyDataSetChanged();
+
                 hideProgressBlock();
             }
 
@@ -149,8 +161,23 @@ public class ChooserFragment extends Fragment {
 
     }
 
-
     public void setBookSelectListener(OnBookRecyclerItemClickListener listener) {
         adapter.setListener(listener);
     }
+
+    private void checkCachedItems() {
+        FirstActivity activity = (FirstActivity) getActivity();
+        if (activity != null) {
+            AppDatabase database = activity.getDatabase();
+            if (database != null) {
+                database.bookItemDao().getAll().observe(this, gitRepoItems -> {
+                    items.clear();
+                    items.addAll(gitRepoItems);
+                    adapter.notifyDataSetChanged();
+                });
+            }
+        }
+    }
+
+
 }

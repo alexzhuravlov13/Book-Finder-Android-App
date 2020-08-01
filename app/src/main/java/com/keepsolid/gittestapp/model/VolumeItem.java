@@ -2,41 +2,56 @@ package com.keepsolid.gittestapp.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.widget.ImageView;
 
-import java.util.ArrayList;
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.keepsolid.gittestapp.utils.db.ListConverter;
+
 import java.util.List;
 import java.util.Objects;
 
+@Entity
+@TypeConverters({ListConverter.class})
 public class VolumeItem implements Parcelable {
+
+    @PrimaryKey(autoGenerate = true)
+    private int volumeId;
     private String title;
     private String subtitle;
     private String publisher;
-    private List<String> authors = new ArrayList<>();
+    private List<String> authors;
     private String publishedDate;
     private String description;
     private int pageCount;
 
-    private ImageLinks imageLinks = new ImageLinks("", "");
+    @Embedded
+    private ImageLinks imageLinks;
 
     public VolumeItem() {
     }
 
-    public VolumeItem(String title, String subtitle, String publisher, List<String> authors, String publishedDate, String description, int pageCount, ImageLinks imageLinks) {
+
+    public VolumeItem(int volumeId, String title, String subtitle, String publisher, List<String> authors, String publishedDate, String description, int pageCount, ImageLinks imageLinks) {
+        this.volumeId = volumeId;
         this.title = title;
         this.subtitle = subtitle;
         this.publisher = publisher;
-        this.authors = authors;
+        if (authors != null) {
+            this.authors = authors;
+        }
         this.publishedDate = publishedDate;
         this.description = description;
         this.pageCount = pageCount;
-        if (imageLinks!=null){
+        if (imageLinks != null) {
             this.imageLinks = imageLinks;
-        };
+        }
     }
 
-
     protected VolumeItem(Parcel in) {
+        volumeId = in.readInt();
         title = in.readString();
         subtitle = in.readString();
         publisher = in.readString();
@@ -58,6 +73,14 @@ public class VolumeItem implements Parcelable {
             return new VolumeItem[size];
         }
     };
+
+    public int getVolumeId() {
+        return volumeId;
+    }
+
+    public void setVolumeId(int volumeId) {
+        this.volumeId = volumeId;
+    }
 
     public String getTitle() {
         return title;
@@ -124,10 +147,12 @@ public class VolumeItem implements Parcelable {
         this.pageCount = pageCount;
     }
 
+
     @Override
     public String toString() {
         return "VolumeItem{" +
-                "title='" + title + '\'' +
+                "id=" + volumeId +
+                ", title='" + title + '\'' +
                 ", subtitle='" + subtitle + '\'' +
                 ", publisher='" + publisher + '\'' +
                 ", authors=" + authors +
@@ -143,7 +168,8 @@ public class VolumeItem implements Parcelable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         VolumeItem that = (VolumeItem) o;
-        return pageCount == that.pageCount &&
+        return volumeId == that.volumeId &&
+                pageCount == that.pageCount &&
                 Objects.equals(title, that.title) &&
                 Objects.equals(subtitle, that.subtitle) &&
                 Objects.equals(publisher, that.publisher) &&
@@ -155,7 +181,7 @@ public class VolumeItem implements Parcelable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, subtitle, publisher, authors, publishedDate, description, pageCount, imageLinks);
+        return Objects.hash(volumeId, title, subtitle, publisher, authors, publishedDate, description, pageCount, imageLinks);
     }
 
     @Override
@@ -165,6 +191,7 @@ public class VolumeItem implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(volumeId);
         parcel.writeString(title);
         parcel.writeString(subtitle);
         parcel.writeString(publisher);

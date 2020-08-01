@@ -1,47 +1,49 @@
 package com.keepsolid.gittestapp.model;
 
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.keepsolid.gittestapp.utils.db.ListConverter;
+
 import java.util.Objects;
 
+@Entity(tableName = "bookItemsTable")
+@TypeConverters({ListConverter.class})
 public class BookItem {
-    private String id;
+
+    @PrimaryKey(autoGenerate = true)
+    private int bookId;
+
+    private String bookItemId;
+
+    @Embedded
     private VolumeItem volumeInfo;
 
     public BookItem() {
     }
 
-    public BookItem(String id, VolumeItem volumeInfo) {
-        this.id = id;
+    public BookItem(int bookId, String bookItemId, VolumeItem volumeInfo) {
+        this.bookId = bookId;
+        this.bookItemId = bookItemId;
         this.volumeInfo = volumeInfo;
     }
 
-    @Override
-    public String toString() {
-        return "BookItem{" +
-                "id='" + id + '\'' +
-                ", volumeInfo=" + volumeInfo +
-                '}';
+    public int getBookId() {
+        return bookId;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BookItem bookItem = (BookItem) o;
-        return Objects.equals(id, bookItem.id) &&
-                Objects.equals(volumeInfo, bookItem.volumeInfo);
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, volumeInfo);
+    public String getBookItemId() {
+        return bookItemId;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public void setBookItemId(String bookItemId) {
+        this.bookItemId = bookItemId;
     }
 
     public VolumeItem getVolumeInfo() {
@@ -50,5 +52,29 @@ public class BookItem {
 
     public void setVolumeInfo(VolumeItem volumeInfo) {
         this.volumeInfo = volumeInfo;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BookItem bookItem = (BookItem) o;
+        return bookId == bookItem.bookId &&
+                Objects.equals(bookItemId, bookItem.bookItemId) &&
+                Objects.equals(volumeInfo, bookItem.volumeInfo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bookId, bookItemId, volumeInfo);
+    }
+
+    @Override
+    public String toString() {
+        return "BookItem{" +
+                "bookId=" + bookId +
+                ", bookItemId='" + bookItemId + '\'' +
+                ", volumeInfo=" + volumeInfo +
+                '}';
     }
 }

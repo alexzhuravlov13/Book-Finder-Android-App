@@ -6,6 +6,8 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.keepsolid.gittestapp.R;
+import com.keepsolid.gittestapp.app.BookFinderApp;
+import com.keepsolid.gittestapp.utils.db.AppDatabase;
 
 public abstract class BaseActivity extends AppCompatActivity {
     private MaterialToolbar toolbar;
@@ -22,7 +24,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         toolbar.setTitleTextColor(color);
     }
 
-    public void enableUpButton(){
+    public void enableUpButton() {
         setSupportActionBar(getToolbar());
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
@@ -31,6 +33,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public MaterialToolbar getToolbar() {
         return toolbar;
+    }
+
+    public AppDatabase getDatabase() {
+        return ((BookFinderApp) getApplication()).getAppDatabase();
     }
 
 }

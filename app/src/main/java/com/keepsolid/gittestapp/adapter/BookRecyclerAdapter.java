@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.keepsolid.gittestapp.R;
 import com.keepsolid.gittestapp.model.BookItem;
+import com.keepsolid.gittestapp.model.ImageLinks;
 import com.keepsolid.gittestapp.model.VolumeItem;
 import com.keepsolid.gittestapp.utils.listeners.OnBookRecyclerItemClickListener;
 
@@ -53,10 +54,9 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
         BookItem bookItem = items.get(position);
         VolumeItem volumeInfo = bookItem.getVolumeInfo();
 
-        if(TextUtils.isEmpty(volumeInfo.getPublishedDate())){
+        if (TextUtils.isEmpty(volumeInfo.getPublishedDate())) {
             holder.publishedDate.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             String year = volumeInfo.getPublishedDate().split("-")[0];
             holder.publishedDate.setText(year);
             holder.publishedDate.setVisibility(View.VISIBLE);
@@ -64,12 +64,17 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
         Log.i("BOOKITEM", bookItem.toString());
 
         holder.title.setText(bookItem.getVolumeInfo().getTitle());
-        Glide.with(holder.thumbnail.getContext()).load(bookItem.getVolumeInfo().getImageLinks().getSmallThumbnail()).placeholder(R.drawable.book).into(holder.thumbnail);
+        ImageLinks imageLinks = bookItem.getVolumeInfo().getImageLinks();
+        if (imageLinks != null && imageLinks.getSmallThumbnail() != null) {
+            Glide.with(holder.thumbnail.getContext()).load(imageLinks.getSmallThumbnail()).placeholder(R.drawable.book).into(holder.thumbnail);
+        } else {
+            Glide.with(holder.thumbnail.getContext()).load(R.drawable.book).into(holder.thumbnail);
+        }
 
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (listener!=null) {
+                if (listener != null) {
                     listener.onItemClick(view, holder.getAdapterPosition(), items.get(holder.getAdapterPosition()).getVolumeInfo());
                 }
             }
@@ -81,7 +86,7 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
         return items.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         TextView publishedDate;
         ImageView thumbnail;
