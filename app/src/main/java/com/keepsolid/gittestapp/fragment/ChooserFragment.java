@@ -20,18 +20,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.keepsolid.gittestapp.R;
-import com.keepsolid.gittestapp.activity.FirstActivity;
+import com.keepsolid.gittestapp.activity.MainActivity;
 import com.keepsolid.gittestapp.adapter.BookRecyclerAdapter;
 import com.keepsolid.gittestapp.api.ApiCallback;
 import com.keepsolid.gittestapp.api.RestClient;
 import com.keepsolid.gittestapp.model.BookErrorItem;
 import com.keepsolid.gittestapp.model.BookItem;
 import com.keepsolid.gittestapp.model.GoogleBooksResponse;
+import com.keepsolid.gittestapp.utils.ApplicationSettingsManager;
 import com.keepsolid.gittestapp.utils.KeyboardUtils;
 import com.keepsolid.gittestapp.utils.db.AppDatabase;
 import com.keepsolid.gittestapp.utils.listeners.OnBookRecyclerItemClickListener;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 import retrofit2.Response;
 
@@ -41,7 +44,7 @@ public class ChooserFragment extends Fragment {
     private RecyclerView recycler;
     private View loaderBlock;
 
-    private FloatingActionButton goButton;
+    private FloatingActionButton fingButton;
     private ProgressBar progressBar;
     private TextInputEditText userInput;
     private ArrayList<BookItem> items;
@@ -64,7 +67,7 @@ public class ChooserFragment extends Fragment {
         loaderBlock = view.findViewById(R.id.loader_block);
         progressBar = view.findViewById(R.id.pb_progress);
         userInput = view.findViewById(R.id.et_user_input);
-        goButton = view.findViewById(R.id.btn_find);
+        fingButton = view.findViewById(R.id.btn_find);
 
         items = new ArrayList<>();
         checkCachedItems();
@@ -80,12 +83,33 @@ public class ChooserFragment extends Fragment {
     }
 
     private void handleSearchAction() {
-        if (TextUtils.isEmpty(userInput.getText().toString())) {
+        String userInputText = userInput.getText().toString();
+        if (TextUtils.isEmpty(userInputText)) {
             userInput.requestFocus();
         } else {
-            KeyboardUtils.hide(userInput);
-            loadBooks(userInput.getText().toString());
+            performSearch(userInputText);
         }
+
+    }
+
+    private void performSearch(String userInputText) {
+        KeyboardUtils.hide(userInput);
+        String searchText;
+        if (userInputText != null) {
+            searchText = userInputText.trim();
+            if (!searchText.isEmpty()) {
+                List<String> cachedItems = ApplicationSettingsManager.getCachedItems(getActivity().getApplicationContext());
+                LinkedList<String> historyItems = new LinkedList<>();
+                if (cachedItems != null) {
+                    historyItems.addAll(cachedItems);
+                }
+                historyItems.addFirst(searchText);
+                ApplicationSettingsManager.cacheLoadedItems(getActivity().getApplicationContext(), historyItems);
+
+                loadBooks(searchText);
+            } else makeErrorToast("Put any text");
+        }
+
 
     }
 
@@ -100,7 +124,7 @@ public class ChooserFragment extends Fragment {
                 } else {
                     items.addAll(response.body().getBookItems());
                 }
-                FirstActivity activity = (FirstActivity) getActivity();
+                MainActivity activity = (MainActivity) getActivity();
                 AppDatabase database = null;
                 if (activity != null) {
                     database = activity.getDatabase();
@@ -141,7 +165,7 @@ public class ChooserFragment extends Fragment {
 
     private void initListeners() {
 
-        goButton.setOnClickListener(new View.OnClickListener() {
+        fingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 handleSearchAction();
@@ -166,7 +190,7 @@ public class ChooserFragment extends Fragment {
     }
 
     private void checkCachedItems() {
-        FirstActivity activity = (FirstActivity) getActivity();
+        MainActivity activity = (MainActivity) getActivity();
         if (activity != null) {
             AppDatabase database = activity.getDatabase();
             if (database != null) {
@@ -179,5 +203,8 @@ public class ChooserFragment extends Fragment {
         }
     }
 
-
+    public void setUserInputAndFind(String string) {
+        userInput.setText(string);
+        handleSearchAction();
+    }
 }

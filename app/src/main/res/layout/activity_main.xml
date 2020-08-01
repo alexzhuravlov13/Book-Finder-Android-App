@@ -4,15 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.SecondActivity">
+    android:id="@+id/coordinator"
+    tools:context=".activity.MainActivity">
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar_layout" />
 
     <fragment
-        android:id="@+id/fragment_viewer"
-        android:name="com.keepsolid.gittestapp.fragment.ViewerFragment"
+        android:id="@+id/fragment_chooser"
+        android:background="@color/primaryLightColor"
+        android:name="com.keepsolid.gittestapp.fragment.ChooserFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -1,10 +1,15 @@
 package com.keepsolid.gittestapp.activity;
 
+import android.content.Intent;
+import android.view.MenuItem;
+import android.view.View;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.snackbar.Snackbar;
 import com.keepsolid.gittestapp.R;
 import com.keepsolid.gittestapp.app.BookFinderApp;
 import com.keepsolid.gittestapp.utils.db.AppDatabase;
@@ -12,10 +17,26 @@ import com.keepsolid.gittestapp.utils.db.AppDatabase;
 public abstract class BaseActivity extends AppCompatActivity {
     private MaterialToolbar toolbar;
 
+
     public void initToolbar(String title) {
         toolbar = findViewById(R.id.toolbar);
 
         setTitle(title);
+    }
+
+    public void initMainMenu() {
+        toolbar.inflateMenu(R.menu.menu_main);
+        toolbar.setOnMenuItemClickListener(new MaterialToolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.action_open_history) {
+                    Intent intent = new Intent(BaseActivity.this, SearchHistoryActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     private void setTitle(String title) {
@@ -27,7 +48,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void enableUpButton() {
         setSupportActionBar(getToolbar());
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
+        if (ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
 
     }
 
@@ -39,4 +62,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         return ((BookFinderApp) getApplication()).getAppDatabase();
     }
 
+    public void showSnackBar(String text) {
+        int duration = Snackbar.LENGTH_LONG;
+        Snackbar snackbar = Snackbar.make(findViewById(R.id.coordinator), text, duration);
+        snackbar.setAction("Hide", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        snackbar.show();
+    }
 }

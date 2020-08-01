@@ -7,4 +7,6 @@
     <string name="page_count_headline">Pages:</string>
     <string name="description_headline">Description:</string>
     <string name="unknown">Unknown</string>
+    <string name="history_title">History</string>
+    <string name="history_clear_title">Clear</string>
 </resources>

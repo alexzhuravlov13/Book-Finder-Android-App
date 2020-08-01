@@ -13,7 +13,7 @@ import com.keepsolid.gittestapp.utils.Constants;
 import com.keepsolid.gittestapp.utils.listeners.OnBookRecyclerItemClickListener;
 
 
-public class FirstActivity extends BaseActivity {
+public class MainActivity extends BaseActivity {
     private ChooserFragment chooserFragment;
     private ViewerFragment viewerFragment;
 
@@ -24,13 +24,19 @@ public class FirstActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_first);
+        setContentView(R.layout.activity_main);
 
         initToolbar("Book finder");
+        initMainMenu();
 
         initViews();
 
         initListeners();
+
+        String historyString = getIntent().getStringExtra(Constants.KEY_RES_ID);
+        chooserFragment.setUserInputAndFind(historyString);
+
+        showSnackBar("Books list loaded from cache");
     }
 
     private void initViews() {
@@ -59,7 +65,7 @@ public class FirstActivity extends BaseActivity {
             toolbar.setTitle(volumeItem.getTitle());
             viewerFragment.displayResource(volumeItem);
         } else {
-            Intent viewIntent = new Intent(FirstActivity.this, SecondActivity.class);
+            Intent viewIntent = new Intent(MainActivity.this, DetailActivity.class);
             viewIntent.putExtra(Constants.KEY_RES_ID, volumeItem);
             startActivity(viewIntent);
         }

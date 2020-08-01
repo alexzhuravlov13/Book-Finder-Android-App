@@ -2,23 +2,22 @@ package com.keepsolid.gittestapp.activity;
 
 import android.os.Bundle;
 
-import androidx.core.content.ContextCompat;
-
 import com.google.android.material.appbar.MaterialToolbar;
 import com.keepsolid.gittestapp.R;
 import com.keepsolid.gittestapp.fragment.ViewerFragment;
 import com.keepsolid.gittestapp.model.VolumeItem;
 import com.keepsolid.gittestapp.utils.Constants;
 
-public class SecondActivity extends BaseActivity {
+public class DetailActivity extends BaseActivity {
     private ViewerFragment viewerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_second);
+        setContentView(R.layout.activity_detail);
 
         initToolbar(getString(R.string.app_name));
+        initMainMenu();
         enableUpButton();
 
 

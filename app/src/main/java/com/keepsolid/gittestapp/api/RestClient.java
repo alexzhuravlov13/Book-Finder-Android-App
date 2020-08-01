@@ -13,6 +13,7 @@ public class RestClient {
 
     private ApiService apiService;
     private Retrofit retrofit;
+    private Gson gson;
 
     private final static String API_URL = "https://www.googleapis.com";
 
@@ -22,7 +23,7 @@ public class RestClient {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
-        Gson gson = new GsonBuilder()
+        gson = new GsonBuilder()
                 .create();
 
         retrofit = new Retrofit.Builder()
@@ -46,15 +47,14 @@ public class RestClient {
         return apiService;
     }
 
-    public void setApiService(ApiService apiService) {
-        this.apiService = apiService;
-    }
 
     public Retrofit getRetrofit() {
         return retrofit;
     }
 
-    public void setRetrofit(Retrofit retrofit) {
-        this.retrofit = retrofit;
+    public Gson getGson() {
+        return gson;
     }
+
+
 }
