@@ -12,6 +12,7 @@
 
     <fragment
         android:id="@+id/fragment_chooser"
+        android:background="@color/primaryLightColor"
         android:name="com.keepsolid.gittestapp.fragment.ChooserFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"

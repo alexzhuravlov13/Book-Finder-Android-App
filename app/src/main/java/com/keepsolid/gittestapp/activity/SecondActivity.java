@@ -2,6 +2,8 @@ package com.keepsolid.gittestapp.activity;
 
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
+
 import com.google.android.material.appbar.MaterialToolbar;
 import com.keepsolid.gittestapp.R;
 import com.keepsolid.gittestapp.fragment.ViewerFragment;

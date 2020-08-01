@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,12 +17,28 @@ import com.bumptech.glide.Glide;
 import com.keepsolid.gittestapp.R;
 import com.keepsolid.gittestapp.model.VolumeItem;
 
+import java.util.List;
+
 public class ViewerFragment extends Fragment {
 
     private AppCompatImageView thumbnail;
     private TextView title;
+
+    private LinearLayout authors_layout;
     private TextView authors;
+
+    private LinearLayout publishedDate_layout;
     private TextView publishedDate;
+
+    private LinearLayout publisher_layout;
+    private TextView publisher;
+
+    private LinearLayout pages_layout;
+    private TextView pages;
+
+    private LinearLayout description_layout;
+    private TextView description;
+
     private VolumeItem volumeItem;
 
     public ViewerFragment() {
@@ -47,8 +64,23 @@ public class ViewerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_viewer, container, false);
         thumbnail = view.findViewById(R.id.thumbnail);
         title = view.findViewById(R.id.title);
+
+        authors_layout = view.findViewById(R.id.authors_layout);
         authors = view.findViewById(R.id.authors);
+
+        publishedDate_layout = view.findViewById(R.id.publishedDate_layout);
         publishedDate = view.findViewById(R.id.publishedDate);
+
+        publisher_layout = view.findViewById(R.id.publisher_layout);
+        publisher = view.findViewById(R.id.publisher);
+
+        pages_layout = view.findViewById(R.id.pages_count_layout);
+        pages = view.findViewById(R.id.pages_count);
+
+
+        description_layout = view.findViewById(R.id.description_layout);
+        description = view.findViewById(R.id.description);
+
         return view;
     }
 
@@ -61,14 +93,50 @@ public class ViewerFragment extends Fragment {
         thumbnail.setContentDescription(volumeItem.getTitle());
 
         title.setText(volumeItem.getTitle());
-        String authorsString = volumeItem.getAuthors().toString();
-        authors.setText(authorsString.substring(1, authorsString.length() - 1));
-        String publishedDate = volumeItem.getPublishedDate();
-        String year = "";
-        if (publishedDate != null) {
-            year = publishedDate.split("-")[0];
+
+        List<String> authors = volumeItem.getAuthors();
+        if (authors.size() == 0) {
+            authors_layout.setVisibility(View.INVISIBLE);
+        } else {
+            authors_layout.setVisibility(View.VISIBLE);
+            String authorsString = authors.toString();
+            this.authors.setText(authorsString.substring(1, authorsString.length() - 1));
         }
-        this.publishedDate.setText(year);
+
+        String volumePublishedDate = volumeItem.getPublishedDate();
+        if (volumePublishedDate.trim().isEmpty()) {
+            publishedDate_layout.setVisibility(View.INVISIBLE);
+        } else {
+            publishedDate_layout.setVisibility(View.VISIBLE);
+            String year = volumePublishedDate.split("-")[0];
+            publishedDate.setText(year);
+
+        }
+
+        String volumeItemPublisher = volumeItem.getPublisher();
+        if (volumeItemPublisher.trim().isEmpty()) {
+            publisher_layout.setVisibility(View.INVISIBLE);
+        } else {
+            publisher_layout.setVisibility(View.VISIBLE);
+            publisher.setText(volumeItemPublisher);
+        }
+
+        int volumeItemPageCount = volumeItem.getPageCount();
+        if (volumeItemPageCount == 0) {
+            pages.setText(R.string.unknown);
+        } else {
+            pages.setText(String.valueOf(volumeItemPageCount));
+        }
+
+
+        String volumeItemDescription = volumeItem.getDescription();
+        if (volumeItemDescription == null || volumeItemDescription.trim().isEmpty()) {
+            description_layout.setVisibility(View.INVISIBLE);
+        } else {
+            description_layout.setVisibility(View.VISIBLE);
+            description.setText(volumeItemDescription);
+        }
+
     }
 
     public AppCompatImageView getThumbnail() {

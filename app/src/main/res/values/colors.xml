@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#795548</color>
-    <color name="colorPrimary_dark">#5D4037</color>
-    <color name="colorPrimary_light">#D7CCC8</color>
-    <color name="colorAccent">#536DFE</color>
-    <color name="colorPrimary_text">#212121</color>
-    <color name="colorSecondary_text">#757575</color>
+    <color name="primaryColor">#CFA493</color>
+    <color name="gradStartColor">#f4c0ac</color>
+    <color name="primaryLightColor">#fff3de</color>
+    <color name="primaryDarkColor">#c0907d</color>
+    <color name="secondaryColor">#ace0f4</color>
+    <color name="secondaryLightColor">#b2ffff</color>
+    <color name="secondaryDarkColor">#48acb8</color>
+    <color name="primaryTextColor">#000000</color>
+    <color name="secondaryTextColor">#000000</color>
+
     <color name="colorIcons">#FFFFFF</color>
     <color name="colorDivider">#BDBDBD</color>
     <color name="loader_background">#59000000</color>

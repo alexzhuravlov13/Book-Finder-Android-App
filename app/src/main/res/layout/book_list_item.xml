@@ -2,13 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/book_item_height"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_margin="@dimen/default_margin">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/thumbnail"
-        android:layout_width="@dimen/thumbnail_mini"
-        android:layout_height="@dimen/thumbnail_mini"
+        android:layout_width="@dimen/thumbnail_mini_widgh"
+        android:layout_height="@dimen/thumbnail_mini_height"
+        android:layout_margin="@dimen/default_middle_margin"
+
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true" />
 
@@ -19,8 +20,6 @@
         android:layout_marginStart="@dimen/default_middle_margin"
         android:layout_marginEnd="@dimen/default_margin"
         android:layout_toEndOf="@id/thumbnail"
-        android:paddingTop="@dimen/default_middle_margin"
-        android:paddingBottom="@dimen/default_middle_margin"
         android:layout_height="wrap_content">
 
 

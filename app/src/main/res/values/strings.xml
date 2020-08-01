@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Book finder</string>
-    <string name="book_to_find">Book to find...</string>
+    <string name="book_to_find">Book to find…</string>
+    <string name="publishedDate_headline">Published Date:</string>
+    <string name="authors_headline">Authors:</string>
+    <string name="publisher_headline">Publisher:</string>
+    <string name="page_count_headline">Pages:</string>
+    <string name="description_headline">Description:</string>
+    <string name="unknown">Unknown</string>
 </resources>
