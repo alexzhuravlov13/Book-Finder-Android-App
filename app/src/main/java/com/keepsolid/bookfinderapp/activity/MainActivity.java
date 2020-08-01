@@ -34,9 +34,11 @@ public class MainActivity extends BaseActivity {
         initListeners();
 
         String historyString = getIntent().getStringExtra(Constants.KEY_RES_ID);
-        chooserFragment.setUserInputAndFind(historyString);
-
-        showSnackBar("Books list loaded from cache");
+        if (historyString != null && !historyString.isEmpty()) {
+            chooserFragment.setUserInputAndFind(historyString);
+        } else {
+            showSnackBar("Books list loaded from cache");
+        }
     }
 
     private void initViews() {
