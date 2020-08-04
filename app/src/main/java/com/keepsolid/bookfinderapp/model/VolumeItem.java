@@ -25,6 +25,7 @@ public class VolumeItem implements Parcelable {
     private List<String> authors;
     private String publishedDate;
     private String description;
+    private String previewLink;
     private int pageCount;
 
     @Embedded
