@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.ViewerFragment">
 
     <ScrollView
@@ -154,5 +155,17 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_open_web"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/default_margin"
+        android:backgroundTint="@color/secondaryColor"
+        android:src="@drawable/baseline_open_in_browser_24"
+        app:elevation="6dp"
+        app:fabSize="normal"
+        app:tint="@android:color/white" />
 
 </FrameLayout>

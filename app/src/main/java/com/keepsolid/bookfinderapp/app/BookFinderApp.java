@@ -15,6 +15,7 @@ public class BookFinderApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        deleteDatabase("bookitems");
         appDatabase = Room.databaseBuilder(this, AppDatabase.class, "bookitems")
                 .allowMainThreadQueries()
                 .build();

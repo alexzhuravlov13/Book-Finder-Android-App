@@ -11,19 +11,23 @@
         android:id="@+id/ll_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/default_middle_margin"
+        android:padding="@dimen/default_middle_margin"
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_user_input"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:hint="@string/book_to_find"
-            android:imeOptions="actionGo"
-            android:inputType="text"
-            android:maxLines="1" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/book_to_find">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_user_input" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 

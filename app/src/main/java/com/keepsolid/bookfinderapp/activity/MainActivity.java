@@ -47,6 +47,7 @@ public class MainActivity extends BaseActivity {
 
         if (isInLandscapeMode) {
             viewerFragment = (ViewerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_viewer);
+            viewerFragment.hideOpenButton();
         }
 
     }
@@ -65,6 +66,8 @@ public class MainActivity extends BaseActivity {
         if (isInLandscapeMode) {
             MaterialToolbar toolbar = getToolbar();
             toolbar.setTitle(volumeItem.getTitle());
+            viewerFragment.setVolumeItem(volumeItem);
+            viewerFragment.showOpenButton();
             viewerFragment.displayResource(volumeItem);
         } else {
             Intent viewIntent = new Intent(MainActivity.this, DetailActivity.class);

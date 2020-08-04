@@ -1,5 +1,7 @@
 package com.keepsolid.bookfinderapp.api;
 
+import android.net.Uri;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -24,6 +26,8 @@ public class RestClient {
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
         gson = new GsonBuilder()
+                .registerTypeAdapter(Uri.class, new UriDeserializer())
+                .registerTypeAdapter(Uri.class, new UriSerializer())
                 .create();
 
         retrofit = new Retrofit.Builder()

@@ -22,11 +22,13 @@ public class DetailActivity extends BaseActivity {
 
         VolumeItem volumeItem = getIntent().getParcelableExtra(Constants.KEY_RES_ID);
 
+
         viewerFragment = (ViewerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_viewer);
 
         if (viewerFragment != null) {
             MaterialToolbar toolbar = getToolbar();
             toolbar.setTitle(volumeItem.getTitle());
+            viewerFragment.setVolumeItem(volumeItem);
             viewerFragment.displayResource(volumeItem);
         }
 

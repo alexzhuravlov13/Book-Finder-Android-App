@@ -1,5 +1,6 @@
 package com.keepsolid.bookfinderapp.model;
 
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -9,12 +10,13 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.keepsolid.bookfinderapp.utils.db.ListConverter;
+import com.keepsolid.bookfinderapp.utils.db.UriConverter;
 
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-@TypeConverters({ListConverter.class})
+@TypeConverters({ListConverter.class, UriConverter.class})
 public class VolumeItem implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
@@ -25,30 +27,13 @@ public class VolumeItem implements Parcelable {
     private List<String> authors;
     private String publishedDate;
     private String description;
-    private String previewLink;
+    private Uri previewLink;
     private int pageCount;
 
     @Embedded
     private ImageLinks imageLinks;
 
     public VolumeItem() {
-    }
-
-
-    public VolumeItem(int volumeId, String title, String subtitle, String publisher, List<String> authors, String publishedDate, String description, int pageCount, ImageLinks imageLinks) {
-        this.volumeId = volumeId;
-        this.title = title;
-        this.subtitle = subtitle;
-        this.publisher = publisher;
-        if (authors != null) {
-            this.authors = authors;
-        }
-        this.publishedDate = publishedDate;
-        this.description = description;
-        this.pageCount = pageCount;
-        if (imageLinks != null) {
-            this.imageLinks = imageLinks;
-        }
     }
 
     protected VolumeItem(Parcel in) {
@@ -59,6 +44,7 @@ public class VolumeItem implements Parcelable {
         authors = in.createStringArrayList();
         publishedDate = in.readString();
         description = in.readString();
+        previewLink = in.readParcelable(Uri.class.getClassLoader());
         pageCount = in.readInt();
         imageLinks = in.readParcelable(ImageLinks.class.getClassLoader());
     }
@@ -74,6 +60,14 @@ public class VolumeItem implements Parcelable {
             return new VolumeItem[size];
         }
     };
+
+    public Uri getPreviewLink() {
+        return previewLink;
+    }
+
+    public void setPreviewLink(Uri previewLink) {
+        this.previewLink = previewLink;
+    }
 
     public int getVolumeId() {
         return volumeId;
@@ -148,17 +142,17 @@ public class VolumeItem implements Parcelable {
         this.pageCount = pageCount;
     }
 
-
     @Override
     public String toString() {
         return "VolumeItem{" +
-                "id=" + volumeId +
+                "volumeId=" + volumeId +
                 ", title='" + title + '\'' +
                 ", subtitle='" + subtitle + '\'' +
                 ", publisher='" + publisher + '\'' +
                 ", authors=" + authors +
                 ", publishedDate='" + publishedDate + '\'' +
                 ", description='" + description + '\'' +
+                ", previewLink=" + previewLink +
                 ", pageCount=" + pageCount +
                 ", imageLinks=" + imageLinks +
                 '}';
@@ -177,12 +171,13 @@ public class VolumeItem implements Parcelable {
                 Objects.equals(authors, that.authors) &&
                 Objects.equals(publishedDate, that.publishedDate) &&
                 Objects.equals(description, that.description) &&
+                Objects.equals(previewLink, that.previewLink) &&
                 Objects.equals(imageLinks, that.imageLinks);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(volumeId, title, subtitle, publisher, authors, publishedDate, description, pageCount, imageLinks);
+        return Objects.hash(volumeId, title, subtitle, publisher, authors, publishedDate, description, previewLink, pageCount, imageLinks);
     }
 
     @Override
@@ -199,6 +194,7 @@ public class VolumeItem implements Parcelable {
         parcel.writeStringList(authors);
         parcel.writeString(publishedDate);
         parcel.writeString(description);
+        parcel.writeParcelable(previewLink, i);
         parcel.writeInt(pageCount);
         parcel.writeParcelable(imageLinks, i);
     }

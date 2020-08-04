@@ -44,7 +44,7 @@ public class ChooserFragment extends Fragment {
     private RecyclerView recycler;
     private View loaderBlock;
 
-    private FloatingActionButton fingButton;
+    private FloatingActionButton findButton;
     private ProgressBar progressBar;
     private TextInputEditText userInput;
     private ArrayList<BookItem> items;
@@ -71,7 +71,7 @@ public class ChooserFragment extends Fragment {
         loaderBlock = view.findViewById(R.id.loader_block);
         progressBar = view.findViewById(R.id.pb_progress);
         userInput = view.findViewById(R.id.et_user_input);
-        fingButton = view.findViewById(R.id.btn_find);
+        findButton = view.findViewById(R.id.btn_find);
 
         items = new ArrayList<>();
         checkCachedItems();
@@ -87,6 +87,7 @@ public class ChooserFragment extends Fragment {
     }
 
     private void handleSearchAction() {
+        KeyboardUtils.show(userInput);
         String userInputText = userInput.getText().toString();
         if (TextUtils.isEmpty(userInputText)) {
             userInput.requestFocus();
@@ -169,7 +170,7 @@ public class ChooserFragment extends Fragment {
 
     private void initListeners() {
 
-        fingButton.setOnClickListener(new View.OnClickListener() {
+        findButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 handleSearchAction();

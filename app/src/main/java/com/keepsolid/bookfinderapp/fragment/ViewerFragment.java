@@ -1,5 +1,7 @@
 package com.keepsolid.bookfinderapp.fragment;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +17,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.keepsolid.bookfinderapp.R;
 import com.keepsolid.bookfinderapp.model.ImageLinks;
 import com.keepsolid.bookfinderapp.model.VolumeItem;
@@ -39,6 +43,8 @@ public class ViewerFragment extends Fragment {
 
     private LinearLayout description_layout;
     private TextView description;
+
+    private FloatingActionButton buttonOpenBrowser;
 
     private VolumeItem volumeItem;
 
@@ -81,6 +87,22 @@ public class ViewerFragment extends Fragment {
 
         description_layout = view.findViewById(R.id.description_layout);
         description = view.findViewById(R.id.description);
+
+        buttonOpenBrowser = view.findViewById(R.id.btn_open_web);
+
+        buttonOpenBrowser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    Intent myIntent = new Intent(Intent.ACTION_VIEW, volumeItem.getPreviewLink());
+                    startActivity(myIntent);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(getContext(), "No application can handle this request."
+                            + " Please install a webbrowser", Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+        });
 
         return view;
     }
@@ -149,4 +171,19 @@ public class ViewerFragment extends Fragment {
         return thumbnail;
     }
 
+    public VolumeItem getVolumeItem() {
+        return volumeItem;
+    }
+
+    public void setVolumeItem(VolumeItem volumeItem) {
+        this.volumeItem = volumeItem;
+    }
+
+    public void showOpenButton() {
+        buttonOpenBrowser.setVisibility(View.VISIBLE);
+    }
+
+    public void hideOpenButton() {
+        buttonOpenBrowser.setVisibility(View.INVISIBLE);
+    }
 }
