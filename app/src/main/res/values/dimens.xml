@@ -8,8 +8,7 @@
     <dimen name="title_size">18sp</dimen>
     <dimen name="thumbnail_mini">56dp</dimen>
     <dimen name="book_item_height">72dp</dimen>
-    <dimen name="thumbnail_mini_height">99dp</dimen>
-    <dimen name="thumbnail_mini_widgh">64dp</dimen>
+    <dimen name="thumbnail_mini_height">200dp</dimen>
     <dimen name="default_small_margin">4dp</dimen>
     <dimen name="thumbnail_height">300dp</dimen>
 </resources>
