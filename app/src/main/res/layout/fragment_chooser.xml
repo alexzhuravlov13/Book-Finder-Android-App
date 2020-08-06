@@ -25,6 +25,9 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:imeOptions="actionGo"
+                android:inputType="text"
+                android:maxLines="1"
                 android:id="@+id/et_user_input" />
 
         </com.google.android.material.textfield.TextInputLayout>
