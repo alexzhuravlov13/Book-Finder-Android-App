@@ -2,6 +2,7 @@ package com.keepsolid.bookfinderapp.screens.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
@@ -78,6 +80,13 @@ public class MainFragment extends Fragment implements MainContract.View {
         recycler.setAdapter(adapter);
 
         initListeners();
+        FragmentActivity activity = getActivity();
+        if (activity != null && activity.getIntent().getExtras() != null) {
+            String title = getActivity().getIntent().getStringExtra(Constants.KEY_RES_ID);
+            userInput.setText(title);
+            presenter.takeView(this);
+            handleSearchAction();
+        }
 
         presenter.takeView(this);
 
@@ -86,7 +95,11 @@ public class MainFragment extends Fragment implements MainContract.View {
 
     private void handleSearchAction() {
         KeyboardUtils.show(userInput);
-        String userInputText = userInput.getText().toString();
+        Editable editable = userInput.getText();
+        String userInputText = "";
+        if (editable != null) {
+            userInputText = editable.toString();
+        }
         if (TextUtils.isEmpty(userInputText)) {
             userInput.requestFocus();
         } else {
@@ -143,7 +156,7 @@ public class MainFragment extends Fragment implements MainContract.View {
 
     @Override
     public void observeItems(LiveData<List<BookItem>> itemsLiveData) {
-        showProgressBlock();
+
         itemsLiveData.observe(MainFragment.this, new Observer<List<BookItem>>() {
             @Override
             public void onChanged(List<BookItem> gitRepoItems) {
@@ -152,7 +165,6 @@ public class MainFragment extends Fragment implements MainContract.View {
                 adapter.notifyDataSetChanged();
             }
         });
-        hideProgressBlock();
     }
 
     @Override
@@ -182,14 +194,16 @@ public class MainFragment extends Fragment implements MainContract.View {
         });
 
         MainActivity activity = (MainActivity) getActivity();
-        if (activity.isInLandscapeMode()) {
-            adapter.setListener((v, position, volumeItem) -> activity.displaySelected(volumeItem));
-        } else {
-            adapter.setListener((v, position, volumeItem) -> {
-                Intent viewIntent = new Intent(getActivity(), DetailActivity.class);
-                viewIntent.putExtra(Constants.KEY_RES_ID, volumeItem);
-                startActivity(viewIntent);
-            });
+        if (activity != null) {
+            if (activity.isInLandscapeMode()) {
+                adapter.setListener((v, position, volumeItem) -> activity.displaySelected(volumeItem));
+            } else {
+                adapter.setListener((v, position, volumeItem) -> {
+                    Intent viewIntent = new Intent(getActivity(), DetailActivity.class);
+                    viewIntent.putExtra(Constants.KEY_RES_ID, volumeItem);
+                    startActivity(viewIntent);
+                });
+            }
         }
 
 

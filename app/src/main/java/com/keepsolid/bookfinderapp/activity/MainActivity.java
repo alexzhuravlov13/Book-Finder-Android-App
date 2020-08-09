@@ -11,7 +11,6 @@ import com.keepsolid.bookfinderapp.model.VolumeItem;
 import com.keepsolid.bookfinderapp.screens.main.MainFragment;
 import com.keepsolid.bookfinderapp.screens.main.MainPresenter;
 import com.keepsolid.bookfinderapp.utils.ApplicationSettingsManager;
-import com.keepsolid.bookfinderapp.utils.Constants;
 
 
 public class MainActivity extends BaseActivity {
@@ -30,21 +29,25 @@ public class MainActivity extends BaseActivity {
 
         initViews();
 
-        String historyString = getIntent().getStringExtra(Constants.KEY_RES_ID);
-        if (historyString != null && !historyString.isEmpty()) {
-            chooserFragment.setUserInputAndFind(historyString);
-        } else {
-            showSnackBar("Books list loaded from cache");
-        }
+        showSnackBar("Books list loaded from cache");
+
     }
 
     private void initViews() {
         FrameLayout chooserFragmentContainer = findViewById(R.id.fragment_chooser_container);
 
-        chooserFragment = new MainFragment();
-        chooserFragment.setPresenter(new MainPresenter(new ApplicationSettingsManager(MainActivity.this), getDatabase()));
+        MainPresenter mainPresenter = new MainPresenter(new ApplicationSettingsManager(MainActivity.this), getDatabase());
 
-        getSupportFragmentManager().beginTransaction().add(chooserFragmentContainer.getId(), chooserFragment).commit();
+        if (getSupportFragmentManager().findFragmentById(R.id.fragment_chooser_container) != null) {
+            chooserFragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_chooser_container);
+        } else {
+            chooserFragment = new MainFragment();
+        }
+        if (chooserFragment != null) {
+            chooserFragment.setPresenter(mainPresenter);
+        }
+        getSupportFragmentManager().beginTransaction().replace(chooserFragmentContainer.getId(), chooserFragment).commit();
+
 
         isInLandscapeMode = findViewById(R.id.fragment_viewer) != null;
 
