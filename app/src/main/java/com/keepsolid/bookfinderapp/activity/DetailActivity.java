@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.keepsolid.bookfinderapp.R;
+import com.keepsolid.bookfinderapp.base.BaseActivity;
 import com.keepsolid.bookfinderapp.fragment.ViewerFragment;
 import com.keepsolid.bookfinderapp.model.VolumeItem;
 import com.keepsolid.bookfinderapp.utils.Constants;

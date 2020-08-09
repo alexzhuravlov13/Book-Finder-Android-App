@@ -1,23 +1,22 @@
 package com.keepsolid.bookfinderapp.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.widget.FrameLayout;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.keepsolid.bookfinderapp.R;
-import com.keepsolid.bookfinderapp.fragment.ChooserFragment;
+import com.keepsolid.bookfinderapp.base.BaseActivity;
 import com.keepsolid.bookfinderapp.fragment.ViewerFragment;
 import com.keepsolid.bookfinderapp.model.VolumeItem;
+import com.keepsolid.bookfinderapp.screens.main.MainFragment;
+import com.keepsolid.bookfinderapp.screens.main.MainPresenter;
+import com.keepsolid.bookfinderapp.utils.ApplicationSettingsManager;
 import com.keepsolid.bookfinderapp.utils.Constants;
-import com.keepsolid.bookfinderapp.utils.listeners.OnBookRecyclerItemClickListener;
 
 
 public class MainActivity extends BaseActivity {
-    private ChooserFragment chooserFragment;
+    private MainFragment chooserFragment;
     private ViewerFragment viewerFragment;
-
-    private OnBookRecyclerItemClickListener listener;
 
     private boolean isInLandscapeMode;
 
@@ -31,8 +30,6 @@ public class MainActivity extends BaseActivity {
 
         initViews();
 
-        initListeners();
-
         String historyString = getIntent().getStringExtra(Constants.KEY_RES_ID);
         if (historyString != null && !historyString.isEmpty()) {
             chooserFragment.setUserInputAndFind(historyString);
@@ -42,37 +39,36 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initViews() {
-        chooserFragment = (ChooserFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_chooser);
+        FrameLayout chooserFragmentContainer = findViewById(R.id.fragment_chooser_container);
+
+        chooserFragment = new MainFragment();
+        chooserFragment.setPresenter(new MainPresenter(new ApplicationSettingsManager(MainActivity.this), getDatabase()));
+
+        getSupportFragmentManager().beginTransaction().add(chooserFragmentContainer.getId(), chooserFragment).commit();
+
         isInLandscapeMode = findViewById(R.id.fragment_viewer) != null;
+
 
         if (isInLandscapeMode) {
             viewerFragment = (ViewerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_viewer);
-            viewerFragment.hideOpenButton();
+            if (viewerFragment != null) {
+                viewerFragment.hideOpenButton();
+            }
         }
 
     }
 
-    private void initListeners() {
-        listener = new OnBookRecyclerItemClickListener() {
-            @Override
-            public void onItemClick(View v, int position, VolumeItem volumeItem) {
-                displaySelected(volumeItem);
-            }
-        };
-        chooserFragment.setBookSelectListener(listener);
-    }
-
-    private void displaySelected(VolumeItem volumeItem) {
+    public void displaySelected(VolumeItem volumeItem) {
         if (isInLandscapeMode) {
             MaterialToolbar toolbar = getToolbar();
             toolbar.setTitle(volumeItem.getTitle());
             viewerFragment.setVolumeItem(volumeItem);
             viewerFragment.showOpenButton();
             viewerFragment.displayResource(volumeItem);
-        } else {
-            Intent viewIntent = new Intent(MainActivity.this, DetailActivity.class);
-            viewIntent.putExtra(Constants.KEY_RES_ID, volumeItem);
-            startActivity(viewIntent);
         }
+    }
+
+    public boolean isInLandscapeMode() {
+        return isInLandscapeMode;
     }
 }

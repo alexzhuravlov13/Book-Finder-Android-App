@@ -33,7 +33,7 @@
             android:name="com.keepsolid.bookfinderapp.activity.DetailActivity"
             android:hardwareAccelerated="true"
             android:parentActivityName="com.keepsolid.bookfinderapp.activity.MainActivity" />
-        <activity android:name="com.keepsolid.bookfinderapp.activity.BaseActivity" />
+        <activity android:name="com.keepsolid.bookfinderapp.base.BaseActivity" />
     </application>
 
 </manifest>

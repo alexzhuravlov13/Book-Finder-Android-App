@@ -1,6 +1,5 @@
 package com.keepsolid.bookfinderapp.adapter;
 
-import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,22 +22,14 @@ import java.util.ArrayList;
 
 public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapter.ViewHolder> {
     private ArrayList<BookItem> items;
-    private Context ctx;
     private OnBookRecyclerItemClickListener listener;
+
+    public BookRecyclerAdapter(ArrayList<BookItem> items) {
+        this.items = items;
+    }
 
     public void setListener(OnBookRecyclerItemClickListener listener) {
         this.listener = listener;
-    }
-
-    public BookRecyclerAdapter(ArrayList<BookItem> items, Context ctx, OnBookRecyclerItemClickListener listener) {
-        this.items = items;
-        this.ctx = ctx;
-        this.listener = listener;
-    }
-
-    public BookRecyclerAdapter(ArrayList<BookItem> items, Context ctx) {
-        this.items = items;
-        this.ctx = ctx;
     }
 
     @NonNull

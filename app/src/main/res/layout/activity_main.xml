@@ -11,10 +11,9 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar_layout" />
 
-    <fragment
-        android:id="@+id/fragment_chooser"
+    <FrameLayout
+        android:id="@+id/fragment_chooser_container"
         android:background="@color/primaryLightColor"
-        android:name="com.keepsolid.bookfinderapp.fragment.ChooserFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

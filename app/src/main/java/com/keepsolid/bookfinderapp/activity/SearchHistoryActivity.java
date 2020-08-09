@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.keepsolid.bookfinderapp.R;
 import com.keepsolid.bookfinderapp.adapter.SearchHistoryRecyclerAdapter;
+import com.keepsolid.bookfinderapp.base.BaseActivity;
 import com.keepsolid.bookfinderapp.utils.ApplicationSettingsManager;
 import com.keepsolid.bookfinderapp.utils.Constants;
 import com.keepsolid.bookfinderapp.utils.listeners.OnHistoryRecyclerItemClickListener;
@@ -22,6 +23,7 @@ public class SearchHistoryActivity extends BaseActivity {
     private RecyclerView recycler;
     private SearchHistoryRecyclerAdapter adapter;
     private FloatingActionButton clearButton;
+    private ApplicationSettingsManager applicationSettingsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,9 @@ public class SearchHistoryActivity extends BaseActivity {
         initToolbar("Search history");
 
         historyItems = new LinkedList<>();
+
+        applicationSettingsManager = new ApplicationSettingsManager(this);
+
         checkCachedItems();
 
         initViews();
@@ -49,7 +54,7 @@ public class SearchHistoryActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 historyItems.clear();
-                ApplicationSettingsManager.cacheLoadedItems(getApplicationContext(), historyItems);
+                applicationSettingsManager.cacheLoadedItems(historyItems);
                 adapter.notifyDataSetChanged();
             }
         });
@@ -90,7 +95,7 @@ public class SearchHistoryActivity extends BaseActivity {
     }
 
     private void checkCachedItems() {
-        List<String> cachedItems = ApplicationSettingsManager.getCachedItems(getApplicationContext());
+        List<String> cachedItems = applicationSettingsManager.getCachedItems();
         if (cachedItems != null && !cachedItems.isEmpty()) {
             historyItems.addAll(cachedItems);
         }

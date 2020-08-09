@@ -1,4 +1,4 @@
-package com.keepsolid.bookfinderapp.activity;
+package com.keepsolid.bookfinderapp.base;
 
 import android.content.Intent;
 import android.view.MenuItem;
@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.snackbar.Snackbar;
 import com.keepsolid.bookfinderapp.R;
+import com.keepsolid.bookfinderapp.activity.SearchHistoryActivity;
 import com.keepsolid.bookfinderapp.app.BookFinderApp;
 import com.keepsolid.bookfinderapp.utils.db.AppDatabase;
 
@@ -58,9 +59,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         return toolbar;
     }
 
-    public AppDatabase getDatabase() {
-        return ((BookFinderApp) getApplication()).getAppDatabase();
-    }
 
     public void showSnackBar(String text) {
         int duration = Snackbar.LENGTH_LONG;
@@ -72,5 +70,10 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         });
         snackbar.show();
+    }
+
+
+    public AppDatabase getDatabase() {
+        return ((BookFinderApp) getApplication()).getAppDatabase();
     }
 }
