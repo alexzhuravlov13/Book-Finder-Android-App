@@ -222,7 +222,6 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        presenter.dropView();
     }
 
     @Override
