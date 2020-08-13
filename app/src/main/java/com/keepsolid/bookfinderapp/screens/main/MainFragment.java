@@ -4,13 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,7 +16,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -122,7 +119,7 @@ public class MainFragment extends Fragment implements MainContract.View {
 
     @Override
     public void hideKeyboard() {
-        //TODO: make method
+        KeyboardUtils.hide(userInput);
     }
 
     @Override
@@ -157,13 +154,10 @@ public class MainFragment extends Fragment implements MainContract.View {
     @Override
     public void observeItems(LiveData<List<BookItem>> itemsLiveData) {
 
-        itemsLiveData.observe(MainFragment.this, new Observer<List<BookItem>>() {
-            @Override
-            public void onChanged(List<BookItem> gitRepoItems) {
-                items.clear();
-                items.addAll(gitRepoItems);
-                adapter.notifyDataSetChanged();
-            }
+        itemsLiveData.observe(MainFragment.this, gitRepoItems -> {
+            items.clear();
+            items.addAll(gitRepoItems);
+            adapter.notifyDataSetChanged();
         });
     }
 
@@ -175,22 +169,14 @@ public class MainFragment extends Fragment implements MainContract.View {
 
     private void initListeners() {
 
-        findButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                handleSearchAction();
-            }
-        });
+        findButton.setOnClickListener(view -> handleSearchAction());
 
-        userInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                if (i == EditorInfo.IME_ACTION_GO) {
-                    handleSearchAction();
-                    return true;
-                }
-                return false;
+        userInput.setOnEditorActionListener((textView, i, keyEvent) -> {
+            if (i == EditorInfo.IME_ACTION_GO) {
+                handleSearchAction();
+                return true;
             }
+            return false;
         });
 
         MainActivity activity = (MainActivity) getActivity();
@@ -207,15 +193,5 @@ public class MainFragment extends Fragment implements MainContract.View {
         }
 
 
-    }
-
-
-    public void setUserInputAndFind(String string) {
-        userInput.setText(string);
-        handleSearchAction();
-    }
-
-    public void setItems(ArrayList<BookItem> items) {
-        this.items = items;
     }
 }

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/coordinator"
+    android:background="@color/primaryLightColor"
     tools:context=".activity.MainActivity">
 
     <include
@@ -13,24 +14,21 @@
 
     <FrameLayout
         android:id="@+id/fragment_chooser_container"
-        android:background="@color/primaryLightColor"
         android:layout_width="300dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/fragment_viewer"
+        app:layout_constraintEnd_toStartOf="@+id/fragment_viewer_container"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-    <fragment
-        android:id="@+id/fragment_viewer"
-        android:name="com.keepsolid.bookfinderapp.fragment.ViewerFragment"
-        android:background="@color/primaryLightColor"
+
+    <FrameLayout
+        android:id="@+id/fragment_viewer_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toEndOf="@+id/fragment_chooser_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

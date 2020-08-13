@@ -1,4 +1,4 @@
-package com.keepsolid.bookfinderapp.fragment;
+package com.keepsolid.bookfinderapp.screens.detail;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -24,7 +24,7 @@ import com.keepsolid.bookfinderapp.model.VolumeItem;
 
 import java.util.List;
 
-public class ViewerFragment extends Fragment {
+public class DetailFragment extends Fragment implements DetailContract.View {
 
     private AppCompatImageView thumbnail;
     private TextView title;
@@ -48,7 +48,16 @@ public class ViewerFragment extends Fragment {
 
     private VolumeItem volumeItem;
 
-    public ViewerFragment() {
+    private DetailContract.Presenter presenter;
+
+    private View context;
+
+    public DetailFragment() {
+    }
+
+    public DetailFragment(VolumeItem volumeItem, DetailContract.Presenter presenter) {
+        this.presenter = presenter;
+        this.volumeItem = volumeItem;
     }
 
     @Override
@@ -57,6 +66,7 @@ public class ViewerFragment extends Fragment {
         if (savedInstanceState != null) {
             volumeItem = savedInstanceState.getParcelable("volumeItem");
         }
+
     }
 
     @Override
@@ -65,10 +75,10 @@ public class ViewerFragment extends Fragment {
         outState.putParcelable("bookId", volumeItem);
     }
 
-    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_viewer, container, false);
+
         thumbnail = view.findViewById(R.id.thumbnail);
         title = view.findViewById(R.id.title);
 
@@ -90,28 +100,29 @@ public class ViewerFragment extends Fragment {
 
         buttonOpenBrowser = view.findViewById(R.id.btn_open_web);
 
-        buttonOpenBrowser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    Intent myIntent = new Intent(Intent.ACTION_VIEW, volumeItem.getPreviewLink());
-                    startActivity(myIntent);
-                } catch (ActivityNotFoundException e) {
-                    Toast.makeText(getContext(), "No application can handle this request."
-                            + " Please install a webbrowser", Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
+        buttonOpenBrowser.setOnClickListener(view1 -> {
+            try {
+                Intent myIntent = new Intent(Intent.ACTION_VIEW, volumeItem.getPreviewLink());
+                startActivity(myIntent);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(getContext(), "No application can handle this request."
+                        + " Please install a webbrowser", Toast.LENGTH_LONG).show();
+                e.printStackTrace();
             }
         });
-
+        if (volumeItem != null) {
+            displayResource(volumeItem);
+        }
         return view;
     }
+
 
     public void displayResource(VolumeItem volumeItem) {
 
         Log.i("VOLUMEITEM_LOG", volumeItem.toString());
-
+        presenter.takeView(this);
         ImageLinks imageLinks = volumeItem.getImageLinks();
+
         if (imageLinks != null && imageLinks.getThumbnail() != null) {
             Glide.with(thumbnail.getContext()).load(imageLinks.getThumbnail()).placeholder(R.drawable.book).into(thumbnail);
         } else {
@@ -119,6 +130,7 @@ public class ViewerFragment extends Fragment {
         }
 
         thumbnail.setContentDescription(volumeItem.getTitle());
+
 
         title.setText(volumeItem.getTitle());
 
@@ -185,5 +197,36 @@ public class ViewerFragment extends Fragment {
 
     public void hideOpenButton() {
         buttonOpenBrowser.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void setPresenter(DetailContract.Presenter presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public void showProgressBlock() {
+
+    }
+
+    @Override
+    public void hideProgressBlock() {
+
+    }
+
+    @Override
+    public void hideKeyboard() {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.dropView();
+    }
+
+    @Override
+    public void makeErrorToast(String errorMessage) {
+        Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
     }
 }

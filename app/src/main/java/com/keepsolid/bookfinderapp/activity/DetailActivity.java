@@ -1,16 +1,17 @@
 package com.keepsolid.bookfinderapp.activity;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.keepsolid.bookfinderapp.R;
 import com.keepsolid.bookfinderapp.base.BaseActivity;
-import com.keepsolid.bookfinderapp.fragment.ViewerFragment;
 import com.keepsolid.bookfinderapp.model.VolumeItem;
+import com.keepsolid.bookfinderapp.screens.detail.DetailFragment;
+import com.keepsolid.bookfinderapp.screens.detail.DetailPresenter;
 import com.keepsolid.bookfinderapp.utils.Constants;
 
 public class DetailActivity extends BaseActivity {
-    private ViewerFragment viewerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,14 +24,18 @@ public class DetailActivity extends BaseActivity {
 
         VolumeItem volumeItem = getIntent().getParcelableExtra(Constants.KEY_RES_ID);
 
+        DetailPresenter detailPresenter = new DetailPresenter();
 
-        viewerFragment = (ViewerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_viewer);
+        View container = findViewById(R.id.fragment_viewer_container);
+        DetailFragment detailFragment = new DetailFragment();
 
-        if (viewerFragment != null) {
-            MaterialToolbar toolbar = getToolbar();
+        detailFragment.setPresenter(detailPresenter);
+        getSupportFragmentManager().beginTransaction().replace(container.getId(), detailFragment).commit();
+
+        MaterialToolbar toolbar = getToolbar();
+        if (volumeItem != null) {
             toolbar.setTitle(volumeItem.getTitle());
-            viewerFragment.setVolumeItem(volumeItem);
-            viewerFragment.displayResource(volumeItem);
+            detailFragment.setVolumeItem(volumeItem);
         }
 
     }

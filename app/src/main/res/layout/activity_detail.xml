@@ -10,11 +10,11 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar_layout" />
 
-    <fragment
-        android:id="@+id/fragment_viewer"
-        android:name="com.keepsolid.bookfinderapp.fragment.ViewerFragment"
+    <FrameLayout
+        android:id="@+id/fragment_viewer_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@color/primaryLightColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,13 +1,15 @@
 package com.keepsolid.bookfinderapp.activity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.keepsolid.bookfinderapp.R;
 import com.keepsolid.bookfinderapp.base.BaseActivity;
-import com.keepsolid.bookfinderapp.fragment.ViewerFragment;
 import com.keepsolid.bookfinderapp.model.VolumeItem;
+import com.keepsolid.bookfinderapp.screens.detail.DetailFragment;
+import com.keepsolid.bookfinderapp.screens.detail.DetailPresenter;
 import com.keepsolid.bookfinderapp.screens.main.MainFragment;
 import com.keepsolid.bookfinderapp.screens.main.MainPresenter;
 import com.keepsolid.bookfinderapp.utils.ApplicationSettingsManager;
@@ -15,7 +17,9 @@ import com.keepsolid.bookfinderapp.utils.ApplicationSettingsManager;
 
 public class MainActivity extends BaseActivity {
     private MainFragment chooserFragment;
-    private ViewerFragment viewerFragment;
+    private DetailFragment viewerFragment;
+
+    private FrameLayout fragmentViewerContainer;
 
     private boolean isInLandscapeMode;
 
@@ -38,36 +42,43 @@ public class MainActivity extends BaseActivity {
 
         MainPresenter mainPresenter = new MainPresenter(new ApplicationSettingsManager(MainActivity.this), getDatabase());
 
-        if (getSupportFragmentManager().findFragmentById(R.id.fragment_chooser_container) != null) {
-            chooserFragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_chooser_container);
-        } else {
+        chooserFragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_chooser_container);
+        if (chooserFragment == null) {
             chooserFragment = new MainFragment();
         }
-        if (chooserFragment != null) {
-            chooserFragment.setPresenter(mainPresenter);
-        }
+
+        chooserFragment.setPresenter(mainPresenter);
         getSupportFragmentManager().beginTransaction().replace(chooserFragmentContainer.getId(), chooserFragment).commit();
 
-
-        isInLandscapeMode = findViewById(R.id.fragment_viewer) != null;
+        fragmentViewerContainer = findViewById(R.id.fragment_viewer_container);
+        isInLandscapeMode = fragmentViewerContainer != null;
 
 
         if (isInLandscapeMode) {
-            viewerFragment = (ViewerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_viewer);
-            if (viewerFragment != null) {
-                viewerFragment.hideOpenButton();
+            fragmentViewerContainer.setVisibility(View.INVISIBLE);
+            DetailPresenter detailPresenter = new DetailPresenter();
+
+            viewerFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_viewer_container);
+            if (viewerFragment == null) {
+                viewerFragment = new DetailFragment();
             }
+            viewerFragment.setPresenter(detailPresenter);
+            getSupportFragmentManager().beginTransaction().replace(fragmentViewerContainer.getId(), viewerFragment).commit();
         }
 
     }
 
     public void displaySelected(VolumeItem volumeItem) {
         if (isInLandscapeMode) {
+            fragmentViewerContainer.setVisibility(View.VISIBLE);
             MaterialToolbar toolbar = getToolbar();
             toolbar.setTitle(volumeItem.getTitle());
-            viewerFragment.setVolumeItem(volumeItem);
-            viewerFragment.showOpenButton();
-            viewerFragment.displayResource(volumeItem);
+            DetailPresenter detailPresenter = new DetailPresenter();
+
+            viewerFragment = new DetailFragment(volumeItem, detailPresenter);
+
+            getSupportFragmentManager().beginTransaction().replace(fragmentViewerContainer.getId(), viewerFragment).commit();
+
         }
     }
 

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/coordinator"
+    android:background="@color/primaryLightColor"
     tools:context=".activity.MainActivity">
 
     <include
@@ -13,7 +14,6 @@
 
     <FrameLayout
         android:id="@+id/fragment_chooser_container"
-        android:background="@color/primaryLightColor"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

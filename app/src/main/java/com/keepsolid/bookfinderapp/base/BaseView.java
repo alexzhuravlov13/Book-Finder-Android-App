@@ -8,8 +8,9 @@ public interface BaseView<T> {
 
     void hideProgressBlock();
 
+    void hideKeyboard();
+
     void makeErrorToast(String errorMessage);
 
-    void hideKeyboard();
 
 }
