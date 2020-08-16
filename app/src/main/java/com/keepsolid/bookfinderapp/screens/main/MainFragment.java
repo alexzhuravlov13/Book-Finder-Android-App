@@ -55,7 +55,6 @@ public class MainFragment extends Fragment implements MainContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -143,6 +142,7 @@ public class MainFragment extends Fragment implements MainContract.View {
 
     @Override
     public void showInputError() {
+        makeErrorToast("Wrong input");
         userInput.requestFocus();
     }
 
@@ -153,7 +153,6 @@ public class MainFragment extends Fragment implements MainContract.View {
 
     @Override
     public void observeItems(LiveData<List<BookItem>> itemsLiveData) {
-
         itemsLiveData.observe(MainFragment.this, gitRepoItems -> {
             items.clear();
             items.addAll(gitRepoItems);

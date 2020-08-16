@@ -50,8 +50,6 @@ public class DetailFragment extends Fragment implements DetailContract.View {
 
     private DetailContract.Presenter presenter;
 
-    private View context;
-
     public DetailFragment() {
     }
 
@@ -179,24 +177,9 @@ public class DetailFragment extends Fragment implements DetailContract.View {
 
     }
 
-    public AppCompatImageView getThumbnail() {
-        return thumbnail;
-    }
-
-    public VolumeItem getVolumeItem() {
-        return volumeItem;
-    }
 
     public void setVolumeItem(VolumeItem volumeItem) {
         this.volumeItem = volumeItem;
-    }
-
-    public void showOpenButton() {
-        buttonOpenBrowser.setVisibility(View.VISIBLE);
-    }
-
-    public void hideOpenButton() {
-        buttonOpenBrowser.setVisibility(View.INVISIBLE);
     }
 
     @Override
